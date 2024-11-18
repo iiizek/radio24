@@ -1,13 +1,13 @@
 {
 	"name": "middleware-server",
 	"version": "1.0.0",
-	"description": "middleware api for correct information proccessing of radio24 streams",
+	"description": "middleware api server for correct information proccessing of radio24 streams",
 	"main": "src/app.js",
 	"module": "src/app.js",
 	"type": "module",
 	"scripts": {
-		"start": "node index.js",
-		"dev": "nodemon index.js"
+		"start": "node src/app.js",
+		"dev": "nodemon src/app.js"
 	},
 	"author": "",
 	"license": "ISC",

@@ -9,7 +9,7 @@ class RadioStream {
 		this.serverName = null;
 		this.artist = artist?.trim();
 		this.title = title?.trim();
-		this.coverUrl = `URL_ОБЛОЖКИ`;
+		this.cover = `URL_ОБЛОЖКИ`;
 	}
 }
 

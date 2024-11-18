@@ -18,7 +18,7 @@ class RadioStreamManager {
 			this.streams = icecastData.icestats.source.map((stream, index) => {
 				const decodedTitle = stream.title
 					? decodeWithFallback(Buffer.from(stream.title, 'binary'))
-					: 'Прямой эфир';
+					: '';
 
 				// Разделяем title на artist и track, если это возможно
 				const [artist, title] = decodedTitle
