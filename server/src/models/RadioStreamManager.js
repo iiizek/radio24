@@ -1,6 +1,9 @@
-import RadioStream from './RadioStream.js';
-import { decodeWithFallback } from '../utils/decoder.js';
+import {
+	getRadioStreamData,
+	updateRadioStream,
+} from '../services/directusService.js';
 import { fetchIcecastData } from '../services/icecastService.js';
+import { decodeWithFallback } from '../utils/decoder.js';
 
 class RadioStreamManager {
 	constructor() {
@@ -11,22 +14,40 @@ class RadioStreamManager {
 
 	async fetchStreams() {
 		try {
-			// Используем сервис для получения данных Icecast
+			// Получаем данные с Icecast
 			const icecastData = await fetchIcecastData(this.icecastUrl);
 
-			// Обновляем потоки
-			this.streams = icecastData.icestats.source.map((stream, index) => {
-				const decodedTitle = stream.title
-					? decodeWithFallback(Buffer.from(stream.title, 'binary'))
-					: '';
+			// Получаем существующие записи в Directus
+			const existingStreams = await getRadioStreamData();
 
-				// Разделяем title на artist и track, если это возможно
-				const [artist, title] = decodedTitle
-					? decodedTitle.split(' - ')
-					: ['Прямой', 'эфир'];
+			this.streams = await Promise.all(
+				icecastData.icestats.source.map(async (stream, index) => {
+					const decodedTitle = stream.title
+						? decodeWithFallback(Buffer.from(stream.title, 'binary'))
+						: '';
+					const [artist, title] = decodedTitle
+						? decodedTitle.split(' - ')
+						: ['Прямой', 'эфир'];
 
-				return new RadioStream(index, stream, artist, title);
-			});
+					// Подготовка данных для обновления
+					const radioStreamData = {
+						listenUrl: stream.listenurl,
+						listeners: stream.listeners,
+						serverUrl: stream.server_url,
+						artist: artist?.trim(),
+						title: title?.trim(),
+					};
+
+					// Проверяем, существует ли запись в Directus, и обновляем её
+					if (existingStreams[index]) {
+						await updateRadioStream(existingStreams[index].id, radioStreamData);
+					} else {
+						console.error(`Поток с индексом ${index} не найден в Directus`);
+					}
+
+					return radioStreamData;
+				})
+			);
 		} catch (error) {
 			console.error('Ошибка при запросе данных с Icecast:', error);
 		}

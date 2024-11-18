@@ -2,7 +2,7 @@ import express from 'express';
 import { radioStreamController } from './controllers/radioStreamController.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.EXPRESS_PORT || 3000;
 
 // Подключаем контроллер маршрутов
 app.use('/api/radio-streams', radioStreamController);
