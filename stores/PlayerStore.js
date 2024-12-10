@@ -47,16 +47,32 @@ const usePlayerStore = create((set, get) => ({
 	pauseStream: async () => {
 		const { audioInstance } = get();
 		if (audioInstance) {
+			set({ isLoading: true });
 			await audioInstance.pauseAsync();
-			set({ isPlaying: false });
+			set({ isPlaying: false, isLoading: false });
 		}
 	},
 
 	resumeStream: async () => {
 		const { audioInstance } = get();
 		if (audioInstance) {
-			await audioInstance.playFromPositionAsync(0);
-			set({ isPlaying: true });
+			set({ isLoading: true });
+
+			audioInstance.setOnPlaybackStatusUpdate((status) => {
+				if (status.isPlaying) {
+					set({ isPlaying: true, isLoading: false });
+				} else if (status.error) {
+					set({ isLoading: false });
+					console.error('Ошибка воспроизведения:', status.error);
+				}
+			});
+
+			try {
+				await audioInstance.playFromPositionAsync(0);
+			} catch (error) {
+				console.error('Ошибка при возобновлении:', error);
+				set({ isLoading: false });
+			}
 		}
 	},
 

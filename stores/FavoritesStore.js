@@ -1,9 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-root-toast';
 import { create } from 'zustand';
-import { Colors } from '../constants/Colors';
-import { Fonts } from '../constants/Fonts';
-import theme from '../utils/colorScheme';
+import Toast from 'react-native-root-toast';
+import toastConfig from '../constants/ToastConfig';
 
 const useFavoritesStore = create((set) => ({
 	favorites: [],
@@ -19,16 +17,7 @@ const useFavoritesStore = create((set) => ({
 		await AsyncStorage.setItem('favorites', JSON.stringify(parsedFavorites));
 		set({ favorites: parsedFavorites });
 
-		Toast.show('Поток добавлен в избранное ❤️', {
-			duration: Toast.durations.SHORT,
-			position: Toast.positions.BOTTOM,
-			shadow: true,
-			animation: true,
-			hideOnPress: true,
-			backgroundColor:
-				theme === 'dark' ? Colors['theme-50'] : Colors['theme-950'],
-			textStyle: { fontFamily: Fonts.regular },
-		});
+		Toast.show('Поток добавлен в избранное ❤️', toastConfig);
 	},
 	removeFavorite: async (stream) => {
 		const favorites = await AsyncStorage.getItem('favorites');
@@ -39,16 +28,7 @@ const useFavoritesStore = create((set) => ({
 		await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
 		set({ favorites: updatedFavorites });
 
-		Toast.show('Поток удален из избранного 💔', {
-			duration: Toast.durations.SHORT,
-			position: Toast.positions.BOTTOM,
-			shadow: true,
-			animation: true,
-			hideOnPress: true,
-			backgroundColor:
-				theme === 'dark' ? Colors['theme-50'] : Colors['theme-950'],
-			textStyle: { fontFamily: Fonts.regular },
-		});
+		Toast.show('Поток удален из избранного 💔', toastConfig);
 	},
 }));
 
