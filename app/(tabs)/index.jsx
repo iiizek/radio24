@@ -1,11 +1,5 @@
-import {
-	StyleSheet,
-	Text,
-	View,
-	FlatList,
-	ActivityIndicator,
-} from 'react-native';
-import { useState, useEffect } from 'react';
+import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
+import { useEffect } from 'react';
 
 import useStreamsStore from '../../stores/StreamsStore';
 import usePlayerStore from '../../stores/PlayerStore';
@@ -18,7 +12,6 @@ import { Fonts } from '../../constants/Fonts';
 import theme from '../../utils/colorScheme';
 import StreamItem from '../../components/StreamItem';
 import CurrentStream from '../../components/CurrentStream';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 	const { streams, setStreams } = useStreamsStore();

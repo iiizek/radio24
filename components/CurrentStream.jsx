@@ -3,6 +3,7 @@ import {
 	View,
 	TouchableNativeFeedback,
 	TouchableOpacity,
+	ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
@@ -19,8 +20,14 @@ import { Colors } from '../constants/Colors';
 import theme from '../utils/colorScheme';
 
 const CurrentStream = () => {
-	const { currentStream, isChosen, isPlaying, songCover, togglePlayPause } =
-		usePlayerStore();
+	const {
+		currentStream,
+		isChosen,
+		isPlaying,
+		songCover,
+		togglePlayPause,
+		isLoading,
+	} = usePlayerStore();
 	const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
 
 	const itemImage = isChosen ? songCover || currentStream?.stream_cover : null;
@@ -67,7 +74,9 @@ const CurrentStream = () => {
 						</TouchableOpacity>
 
 						<TouchableOpacity onPress={togglePlayPause} activeOpacity={0.5}>
-							{isPlaying ? (
+							{isLoading ? (
+								<ActivityIndicator size={30} color={iconColor} />
+							) : isPlaying ? (
 								<PauseIcon
 									strokeWidth={2.5}
 									fill={iconColor}

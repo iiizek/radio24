@@ -32,7 +32,11 @@ const StreamItemImage = memo(
 								source={require('../assets/audio-waves.gif')}
 							/>
 						) : (
-							<CirclePlayIcon size={48} color={Colors['theme-50']} />
+							<CirclePlayIcon
+								strokeWidth={1.5}
+								size={48}
+								color={Colors['theme-50']}
+							/>
 						)}
 					</View>
 				)}
