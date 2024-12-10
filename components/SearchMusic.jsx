@@ -4,6 +4,10 @@ import React from 'react';
 
 import usePlayerStore from '../stores/PlayerStore';
 
+import { Colors } from '../constants/Colors';
+import { Fonts } from '../constants/Fonts';
+import theme from '../utils/colorScheme';
+
 const SearchMusic = () => {
 	const { currentStream } = usePlayerStore();
 	return (

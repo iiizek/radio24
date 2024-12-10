@@ -3,10 +3,8 @@ import {
 	View,
 	TouchableOpacity,
 	TouchableNativeFeedback,
-	Text,
 } from 'react-native';
 import React from 'react';
-import { Link } from 'expo-router';
 
 import DrawerModal from './DrawerModal';
 import {
@@ -22,10 +20,8 @@ import usePlayerStore from '../stores/PlayerStore';
 import useStreamsStore from '../stores/StreamsStore';
 import useFavoritesStore from '../stores/FavoritesStore';
 
-import { Fonts } from '../constants/Fonts';
 import { Colors } from '../constants/Colors';
 
-import theme from '../utils/colorScheme';
 import SearchMusic from './SearchMusic';
 
 const PlayerControls = () => {

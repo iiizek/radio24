@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image } from 'react-native';
 import React, { memo } from 'react';
 
-import { AudioLinesIcon } from 'lucide-react-native';
+import { CirclePlayIcon } from 'lucide-react-native';
 
 import { Colors } from '../constants/Colors';
 
@@ -9,7 +9,7 @@ import usePlayerStore from '../stores/PlayerStore';
 
 const StreamItemImage = memo(
 	({ id = null, cover, width = 64, height = 64 }) => {
-		const { isChosen, currentStream, songCover } = usePlayerStore();
+		const { isChosen, currentStream, songCover, isPlaying } = usePlayerStore();
 		const coverUrl =
 			String(songCover) === String(cover)
 				? songCover
@@ -23,10 +23,14 @@ const StreamItemImage = memo(
 				/>
 				{isChosen && currentStream?.listen_url === id && (
 					<View style={styles.isChosen}>
-						<Image
-							style={styles.isChosenImage}
-							source={require('../assets/audio-waves.gif')}
-						/>
+						{isPlaying ? (
+							<Image
+								style={styles.isChosenImage}
+								source={require('../assets/audio-waves.gif')}
+							/>
+						) : (
+							<CirclePlayIcon size={48} color={Colors['theme-50']} />
+						)}
 					</View>
 				)}
 			</View>
