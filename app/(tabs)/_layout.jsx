@@ -45,7 +45,7 @@ const TabsLayout = () => {
 			<Tabs.Screen
 				name='index'
 				options={{
-					tabBarIcon: ({ color }) => <RadioIcon size={32} color={color} />,
+					tabBarIcon: ({ color }) => <RadioIcon size={28} color={color} />,
 					tabBarLabel: 'Потоки',
 					headerTitle: 'РАДИО24 - Яркие моменты вместе! 🔥',
 				}}
@@ -53,7 +53,7 @@ const TabsLayout = () => {
 			<Tabs.Screen
 				name='favorites'
 				options={{
-					tabBarIcon: ({ color }) => <HeartIcon size={32} color={color} />,
+					tabBarIcon: ({ color }) => <HeartIcon size={28} color={color} />,
 					tabBarLabel: 'Избранное',
 					headerTitle: 'Любимые потоки ❤️‍🔥',
 				}}
@@ -61,7 +61,7 @@ const TabsLayout = () => {
 			<Tabs.Screen
 				name='contacts'
 				options={{
-					tabBarIcon: ({ color }) => <InfoIcon size={32} color={color} />,
+					tabBarIcon: ({ color }) => <InfoIcon size={28} color={color} />,
 					tabBarLabel: 'Контакты',
 					headerTitle: 'Контактная информация',
 				}}
