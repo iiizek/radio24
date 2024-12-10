@@ -31,6 +31,13 @@ const HomeScreen = () => {
 	};
 
 	useEffect(() => {
+		const setup = async () => {
+			await usePlayerStore.getState().setupPlayer();
+		};
+		setup();
+	}, []);
+
+	useEffect(() => {
 		socket.connect();
 
 		socket.on('radio-streams', (data) => {
