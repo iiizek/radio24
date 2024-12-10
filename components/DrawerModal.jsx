@@ -69,11 +69,6 @@ const styles = StyleSheet.create({
 		backgroundColor:
 			theme === 'dark' ? Colors['theme-950'] : Colors['theme-50'],
 		width: '100%',
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 2,
-		},
 		borderTopLeftRadius: 12,
 		borderTopRightRadius: 12,
 	},
@@ -82,8 +77,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingInline: 16,
-		paddingBlock: 16,
+		paddingHorizontal: 16,
+		paddingVertical: 16,
 	},
 
 	modalTitle: {

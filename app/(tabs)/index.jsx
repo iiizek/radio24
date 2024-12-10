@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
 	flatList: {
 		display: 'flex',
 		flexDirection: 'column',
-		gap: 12,
 	},
 
 	attention: {
@@ -95,7 +94,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		flex: 1,
-		gap: 24,
 	},
 
 	attentionTitle: {

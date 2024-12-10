@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingInline: 16,
-		paddingBlock: 16,
+		paddingHorizontal: 16,
+		paddingVertical: 16,
 	},
 
 	backButton: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingInline: 16,
+		paddingHorizontal: 16,
 		gap: 32,
 	},
 
@@ -154,6 +154,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		textAlign: 'center',
 		color: theme === 'dark' ? Colors['theme-400'] : Colors['theme-600'],
-		paddingInline: 16,
+		paddingHorizontal: 16,
 	},
 });

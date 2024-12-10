@@ -72,16 +72,14 @@ const styles = StyleSheet.create({
 	flatList: {
 		display: 'flex',
 		flexDirection: 'column',
-		gap: 12,
 	},
 
 	attention: {
-		paddingInline: 24,
+		paddingHorizontal: 24,
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
 		flex: 1,
-		gap: 24,
 	},
 
 	attentionTitle: {

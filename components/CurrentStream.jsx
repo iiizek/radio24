@@ -106,10 +106,12 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingBlock: 10,
-		paddingInline: 16,
+		paddingVertical: 10,
+		paddingHorizontal: 16,
 		gap: 16,
-		boxShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.2);',
+		borderTopColor:
+			theme === 'dark' ? Colors['theme-900'] : Colors['theme-100'],
+		borderTopWidth: 2,
 		width: '100%',
 	},
 

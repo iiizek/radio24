@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		gap: 24,
 		width: '100%',
-		paddingInline: 24,
-		paddingBlock: 6,
+		paddingHorizontal: 24,
+		paddingVertical: 6,
 	},
 
 	itemText: {

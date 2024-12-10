@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'flex-start',
-		paddingInline: 16,
-		paddingBlock: 16,
+		paddingHorizontal: 16,
+		paddingVertical: 16,
 	},
 
 	modalItem: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'flex-start',
 		width: '100%',
-		paddingBlock: 12,
+		paddingVertical: 12,
 		borderTopWidth: 1,
 		borderTopColor:
 			theme === 'dark' ? Colors['theme-900'] : Colors['theme-100'],

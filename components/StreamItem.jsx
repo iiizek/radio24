@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'stretch',
 		gap: 4,
-		paddingInline: 12,
-		paddingBlock: 6,
+		paddingHorizontal: 12,
+		paddingVertical: 6,
 		width: '100%',
 	},
 
