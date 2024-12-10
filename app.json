@@ -22,7 +22,7 @@
 				"backgroundColor": "#ffffff"
 			},
 			"package": "com.paradiselxst.radio24",
-			"permissions": ["INTERNET"]
+			"permissions": ["INTERNET", "FOREGROUND_SERVICE"]
 		},
 		"web": {
 			"favicon": "./assets/favicon.png",
@@ -33,6 +33,12 @@
 				"projectId": "4d521f26-637f-49bc-8a9b-80162131c617"
 			}
 		},
-		"plugins": ["expo-router", "expo-font"]
+		"plugins": ["expo-router", "expo-font"],
+		"runtimeVersion": {
+			"policy": "appVersion"
+		},
+		"updates": {
+			"url": "https://u.expo.dev/4d521f26-637f-49bc-8a9b-80162131c617"
+		}
 	}
 }

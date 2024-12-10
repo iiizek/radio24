@@ -19,27 +19,9 @@ import { Colors } from '../constants/Colors';
 import theme from '../utils/colorScheme';
 
 const CurrentStream = () => {
-	const {
-		currentStream,
-		isChosen,
-		isPlaying,
-		pauseStream,
-		songCover,
-		playStream,
-		isLoading,
-	} = usePlayerStore();
+	const { currentStream, isChosen, isPlaying, songCover, togglePlayPause } =
+		usePlayerStore();
 	const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
-
-	const togglePlayPause = () => {
-		if (currentStream?.stream_url) {
-			if (isPlaying) {
-				pauseStream();
-			} else {
-				if (isLoading) return;
-				playStream(currentStream.stream_url);
-			}
-		}
-	};
 
 	const itemImage = isChosen ? songCover || currentStream?.stream_cover : null;
 	const itemName = isChosen ? currentStream?.server_name : 'Поток не выбран';
@@ -53,7 +35,7 @@ const CurrentStream = () => {
 		theme === 'dark' ? Colors['theme-400'] : Colors['theme-600'];
 
 	const isFavorite = favorites.some(
-		(favorite) => favorite.listen_url === currentStream?.listen_url
+		(favorite) => favorite?.listen_url === currentStream?.listen_url
 	);
 
 	return (
@@ -68,22 +50,20 @@ const CurrentStream = () => {
 					<View style={styles.endContainer}>
 						<TouchableOpacity
 							onPress={
-								isFavorite
-									? () => removeFavorite(currentStream)
-									: () => addFavorite(currentStream)
+								isChosen
+									? isFavorite
+										? () => removeFavorite(currentStream)
+										: () => addFavorite(currentStream)
+									: () => {}
 							}
 							activeOpacity={0.5}
 						>
-							{isFavorite ? (
-								<HeartIcon
-									strokeWidth={2.5}
-									color={Colors['brand-800']}
-									size={30}
-									fill={Colors['brand-800']}
-								/>
-							) : (
-								<HeartIcon strokeWidth={2.5} color={iconColor} size={30} />
-							)}
+							<HeartIcon
+								strokeWidth={2.5}
+								color={isFavorite ? Colors['brand-800'] : iconColor}
+								size={30}
+								fill={isFavorite ? Colors['brand-800'] : 'transparent'}
+							/>
 						</TouchableOpacity>
 
 						<TouchableOpacity onPress={togglePlayPause} activeOpacity={0.5}>

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Audio } from 'expo-av';
-import { safelyRunOnUI } from '../utils/safeRun';
 
 const usePlayerStore = create((set, get) => ({
 	isLoading: false,
@@ -19,11 +18,19 @@ const usePlayerStore = create((set, get) => ({
 	playStream: async (streamUrl) => {
 		const { audioInstance } = get();
 
+		set({ isLoading: true });
+
 		if (audioInstance) {
-			set({ isLoading: true });
 			await audioInstance.unloadAsync();
 			set({ audioInstance: null });
 		}
+
+		await Audio.setAudioModeAsync({
+			allowsRecordingIOS: false, // Отключаем запись
+			staysActiveInBackground: true, // Фоновое воспроизведение
+			playsInSilentModeIOS: true, // Игнорировать режим "Без звука"
+			shouldDuckAndroid: true,
+		});
 
 		try {
 			const { sound } = await Audio.Sound.createAsync(
@@ -32,6 +39,7 @@ const usePlayerStore = create((set, get) => ({
 			);
 			set({ audioInstance: sound, isPlaying: true, isLoading: false });
 		} catch (error) {
+			set({ isLoading: false });
 			console.error('Ошибка при создании потока:', error);
 		}
 	},
@@ -39,8 +47,29 @@ const usePlayerStore = create((set, get) => ({
 	pauseStream: async () => {
 		const { audioInstance } = get();
 		if (audioInstance) {
+			set({ isLoading: true });
 			await audioInstance.pauseAsync();
-			set({ isPlaying: false });
+			set({ isPlaying: false, isLoading: false });
+		}
+	},
+
+	resumeStream: async () => {
+		const { audioInstance } = get();
+		if (audioInstance) {
+			set({ isLoading: true });
+			//play stream from the end after pause
+			await audioInstance.playFromPositionAsync(0);
+			set({ isPlaying: true, isLoading: false });
+		}
+	},
+
+	togglePlayPause: () => {
+		const { currentStream, isPlaying, pauseStream, resumeStream } = get();
+		if (!currentStream?.stream_url) return;
+		if (isPlaying) {
+			pauseStream();
+		} else {
+			resumeStream();
 		}
 	},
 }));

@@ -1,6 +1,6 @@
 import { StyleSheet, View, TouchableNativeFeedback } from 'react-native';
 import Toast from 'react-native-root-toast';
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo } from 'react';
 
 import StreamItemImage from './StreamItemImage';
 import StreamItemInfo from './StreamItemInfo';
@@ -8,15 +8,14 @@ import StreamItemInfo from './StreamItemInfo';
 import usePlayerStore from '../stores/PlayerStore';
 import useStreamsStore from '../stores/StreamsStore';
 
-const StreamItem = memo(({ cover, name, description, id }) => {
+const StreamItem = memo(({ cover, name, description, id, index }) => {
 	const {
 		setIsChosen,
 		setCurrentStream,
 		playStream,
 		setSongCover,
-		pauseStream,
+		togglePlayPause,
 		currentStream,
-		isPlaying,
 		isLoading,
 	} = usePlayerStore();
 	const { streams } = useStreamsStore();
@@ -43,22 +42,17 @@ const StreamItem = memo(({ cover, name, description, id }) => {
 
 	const isChosen = currentStream?.listen_url === id;
 
-	const togglePlayPause = () => {
-		if (currentStream?.stream_url) {
-			if (isPlaying) {
-				pauseStream();
-			} else {
-				if (isLoading) return;
-				playStream(currentStream.stream_url);
-			}
-		}
-	};
-
 	return (
 		<TouchableNativeFeedback
-			onPress={isChosen ? togglePlayPause : handleChooseStream}
+			onPress={isChosen && !isLoading ? togglePlayPause : handleChooseStream}
 		>
-			<View style={styles.container}>
+			<View
+				style={[
+					styles.container,
+					index === 0 && styles.firstItem,
+					index === streams.length - 1 && styles.lastItem,
+				]}
+			>
 				<View style={styles.startContainer}>
 					<StreamItemImage id={id} cover={cover} />
 					<StreamItemInfo name={name} description={description} />
@@ -79,6 +73,14 @@ const styles = StyleSheet.create({
 		paddingInline: 12,
 		paddingBlock: 6,
 		width: '100%',
+	},
+
+	firstItem: {
+		paddingTop: 12,
+	},
+
+	lastItem: {
+		paddingBottom: 12,
 	},
 
 	startContainer: {

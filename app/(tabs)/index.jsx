@@ -18,6 +18,7 @@ import { Fonts } from '../../constants/Fonts';
 import theme from '../../utils/colorScheme';
 import StreamItem from '../../components/StreamItem';
 import CurrentStream from '../../components/CurrentStream';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 	const { streams, setStreams } = useStreamsStore();
@@ -61,12 +62,13 @@ const HomeScreen = () => {
 				<FlatList
 					style={styles.flatList}
 					data={streams}
-					renderItem={({ item }) => (
+					renderItem={({ item, index }) => (
 						<StreamItem
 							id={item.listen_url}
 							cover={item.stream_cover}
 							name={item.server_name}
 							description={item.server_description}
+							index={index}
 						/>
 					)}
 					keyExtractor={(item) => item.listen_url}

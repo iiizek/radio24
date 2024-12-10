@@ -1,21 +1,36 @@
 {
-  "cli": {
-    "version": ">= 13.2.0",
-    "appVersionSource": "remote"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {
-      "autoIncrement": true
-    }
-  },
-  "submit": {
-    "production": {}
-  }
+	"cli": {
+		"version": ">= 13.2.0",
+		"appVersionSource": "remote"
+	},
+	"build": {
+		"development": {
+			"developmentClient": true,
+			"distribution": "internal",
+			"env": {
+				"API_URL": "${API_URL}",
+				"ADMIN_URL": "${ADMIN_URL}",
+				"ADMIN_TOKEN": "${ADMIN_TOKEN}"
+			}
+		},
+		"preview": {
+			"distribution": "internal",
+			"env": {
+				"API_URL": "${API_URL}",
+				"ADMIN_URL": "${ADMIN_URL}",
+				"ADMIN_TOKEN": "${ADMIN_TOKEN}"
+			}
+		},
+		"production": {
+			"autoIncrement": true,
+			"env": {
+				"API_URL": "${API_URL}",
+				"ADMIN_URL": "${ADMIN_URL}",
+				"ADMIN_TOKEN": "${ADMIN_TOKEN}"
+			}
+		}
+	},
+	"submit": {
+		"production": {}
+	}
 }

@@ -3,6 +3,7 @@ import {
 	View,
 	TouchableOpacity,
 	TouchableNativeFeedback,
+	ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 
@@ -30,39 +31,30 @@ const PlayerControls = () => {
 		isPlaying,
 		currentStream,
 		playStream,
-		pauseStream,
+		togglePlayPause,
 		setSongCover,
 		setCurrentStream,
 		isLoading,
+		isChosen,
 	} = usePlayerStore();
 	const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
-
-	const togglePlayPause = () => {
-		if (currentStream?.stream_url) {
-			if (isPlaying) {
-				pauseStream();
-			} else {
-				if (isLoading) return;
-				playStream(currentStream.stream_url);
-			}
-		}
-	};
 
 	const handleSkip = (method) => {
 		const currentIndex = streams.findIndex(
 			(stream) => stream.listen_url === currentStream.listen_url
 		);
-		console.log(currentIndex);
 		if (currentIndex === -1) return;
 		switch (method) {
 			case 'next':
 				if (currentIndex === streams.length - 1) return;
+				if (isLoading) return;
 				setSongCover(null);
 				setCurrentStream(streams[currentIndex + 1]);
 				playStream(streams[currentIndex + 1].stream_url);
 				break;
 			case 'prev':
 				if (currentIndex === 0) return;
+				if (isLoading) return;
 				setSongCover(null);
 				setCurrentStream(streams[currentIndex - 1]);
 				playStream(streams[currentIndex - 1].stream_url);
@@ -78,23 +70,32 @@ const PlayerControls = () => {
 
 	return (
 		<View style={styles.controls}>
-			<DrawerModal
-				name='Найти песню'
-				icon={
-					<SearchIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
-				}
-			>
-				<SearchMusic />
-			</DrawerModal>
+			{isChosen ? (
+				<DrawerModal
+					name='Найти песню'
+					icon={
+						<SearchIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+					}
+				>
+					<SearchMusic />
+				</DrawerModal>
+			) : (
+				<SearchIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+			)}
 
-			<TouchableOpacity onPress={() => handleSkip('prev')} activeOpacity={0.5}>
+			<TouchableOpacity
+				onPress={isChosen ? () => handleSkip('prev') : () => {}}
+				activeOpacity={0.5}
+			>
 				<SkipBackIcon strokeWidth={2.1} size={42} color={Colors['brand-800']} />
 			</TouchableOpacity>
 
 			<View style={{ borderRadius: 9999, overflow: 'hidden' }}>
 				<TouchableNativeFeedback onPress={togglePlayPause}>
 					<View style={styles.playButton}>
-						{isPlaying ? (
+						{isLoading ? (
+							<ActivityIndicator size={42} color={Colors['theme-50']} />
+						) : isPlaying ? (
 							<PauseIcon
 								fill={Colors['theme-50']}
 								size={42}
@@ -111,7 +112,10 @@ const PlayerControls = () => {
 				</TouchableNativeFeedback>
 			</View>
 
-			<TouchableOpacity onPress={() => handleSkip('next')} activeOpacity={0.5}>
+			<TouchableOpacity
+				onPress={isChosen ? () => handleSkip('next') : () => {}}
+				activeOpacity={0.5}
+			>
 				<SkipForwardIcon
 					strokeWidth={2.1}
 					size={42}
@@ -121,9 +125,11 @@ const PlayerControls = () => {
 
 			<TouchableOpacity
 				onPress={
-					isFavorite
-						? () => removeFavorite(currentStream)
-						: () => addFavorite(currentStream)
+					isChosen
+						? isFavorite
+							? () => removeFavorite(currentStream)
+							: () => addFavorite(currentStream)
+						: () => {}
 				}
 				activeOpacity={0.5}
 			>

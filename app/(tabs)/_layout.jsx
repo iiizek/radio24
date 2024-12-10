@@ -18,14 +18,14 @@ const TabsLayout = () => {
 				tabBarStyle: {
 					backgroundColor: Colors['brand-800'],
 					paddingInline: 32,
-					paddingTop: 8,
-					height: 72,
+					paddingTop: 4,
+					height: 60,
 					borderTopWidth: 0,
 				},
 				tabBarLabelStyle: {
 					fontFamily: Fonts.regular,
-					marginTop: 6,
-					fontSize: 14,
+					marginTop: 4,
+					fontSize: 12,
 					fontWeight: '500',
 					transition: '0.2s ease-in-out',
 				},
