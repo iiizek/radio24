@@ -47,18 +47,16 @@ const usePlayerStore = create((set, get) => ({
 	pauseStream: async () => {
 		const { audioInstance } = get();
 		if (audioInstance) {
-			set({ isLoading: true });
 			await audioInstance.pauseAsync();
-			set({ isPlaying: false, isLoading: false });
+			set({ isPlaying: false });
 		}
 	},
 
 	resumeStream: async () => {
 		const { audioInstance } = get();
 		if (audioInstance) {
-			set({ isLoading: true });
 			await audioInstance.playFromPositionAsync(0);
-			set({ isPlaying: true, isLoading: false });
+			set({ isPlaying: true });
 		}
 	},
 
