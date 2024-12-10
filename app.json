@@ -14,14 +14,15 @@
 			"backgroundColor": "#ffffff"
 		},
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": false
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
-			"package": "com.paradiselxst.radio24"
+			"package": "com.paradiselxst.radio24",
+			"permissions": ["INTERNET"]
 		},
 		"web": {
 			"favicon": "./assets/favicon.png",

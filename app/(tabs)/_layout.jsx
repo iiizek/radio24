@@ -1,9 +1,14 @@
 import { Tabs } from 'expo-router';
+import { usePathname } from 'expo-router';
+
 import { RadioIcon, HeartIcon, InfoIcon } from 'lucide-react-native';
+
 import { Colors } from '../../constants/Colors';
 import { Fonts } from '../../constants/Fonts';
 
 const TabsLayout = () => {
+	const path = usePathname();
+
 	return (
 		<Tabs
 			initialRouteName='index'
@@ -32,6 +37,7 @@ const TabsLayout = () => {
 				headerTitleStyle: {
 					fontFamily: Fonts.bold,
 					color: Colors['theme-50'],
+					fontSize: path === '/' ? 18 : 24,
 				},
 				headerTitleAlign: 'center',
 			}}
