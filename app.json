@@ -1,13 +1,13 @@
 {
 	"expo": {
-		"name": "radio24",
+		"name": "RADIO24",
 		"slug": "radio24",
 		"version": "1.0.0",
 		"scheme": "your-app-scheme",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "automatic",
-		"newArchEnabled": false,
+		"newArchEnabled": true,
 		"splash": {
 			"image": "./assets/splash-icon.png",
 			"resizeMode": "contain",

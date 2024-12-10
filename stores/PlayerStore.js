@@ -57,7 +57,6 @@ const usePlayerStore = create((set, get) => ({
 		const { audioInstance } = get();
 		if (audioInstance) {
 			set({ isLoading: true });
-			//play stream from the end after pause
 			await audioInstance.playFromPositionAsync(0);
 			set({ isPlaying: true, isLoading: false });
 		}
