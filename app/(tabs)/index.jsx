@@ -30,12 +30,12 @@ const HomeScreen = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	const setup = async () => {
-	// 		await usePlayerStore.getState().setupPlayer();
-	// 	};
-	// 	setup();
-	// }, []);
+	useEffect(() => {
+		const setup = async () => {
+			await usePlayerStore.getState().setupPlayer();
+		};
+		setup();
+	}, []);
 
 	useEffect(() => {
 		socket.connect();
