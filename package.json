@@ -1,7 +1,7 @@
 {
 	"name": "radio24",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "node_modules/expo-router/entry-classic.js",
 	"scripts": {
 		"start": "expo start",
 		"android": "expo start --android",

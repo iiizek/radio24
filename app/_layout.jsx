@@ -5,6 +5,7 @@ import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import { View } from 'react-native';
 
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
@@ -34,15 +35,19 @@ export default function RootLayout() {
 	return (
 		<>
 			<SafeAreaView style={{ flex: 1, backgroundColor: Colors['brand-800'] }}>
-				<RootSiblingParent>
-					<Stack>
-						<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-						<Stack.Screen
-							name='modal'
-							options={{ presentation: 'modal', headerShown: false }}
-						/>
-					</Stack>
-				</RootSiblingParent>
+				<View style={{ flex: 1 }}>
+					<RootSiblingParent>
+						<View style={{ flex: 1 }}>
+							<Stack>
+								<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+								<Stack.Screen
+									name='modal'
+									options={{ presentation: 'modal', headerShown: false }}
+								/>
+							</Stack>
+						</View>
+					</RootSiblingParent>
+				</View>
 			</SafeAreaView>
 
 			<StatusBar style='light' />
