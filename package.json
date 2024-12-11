@@ -1,7 +1,7 @@
 {
 	"name": "radio24",
 	"version": "1.0.0",
-	"main": "node_modules/expo-router/entry-classic.js",
+	"main": "index.js",
 	"scripts": {
 		"start": "expo start",
 		"android": "expo start --android",
@@ -23,6 +23,7 @@
 		"expo-system-ui": "~4.0.6",
 		"expo-updates": "~0.26.10",
 		"lucide-react-native": "^0.460.0",
+		"mux.js": "^6.3.0",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
 		"react-native": "0.76.5",
@@ -33,6 +34,7 @@
 		"react-native-track-player": "^4.1.1",
 		"react-native-uuid": "^2.0.3",
 		"react-native-web": "~0.19.13",
+		"shaka-player": "^4.12.4",
 		"socket.io-client": "^4.8.1",
 		"zustand": "^5.0.1"
 	},

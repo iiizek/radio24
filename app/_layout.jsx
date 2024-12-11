@@ -12,10 +12,6 @@ import { Fonts } from '../constants/Fonts';
 
 SplashScreen.preventAutoHideAsync();
 
-export const unstable_settings = {
-	initialRouteName: 'index',
-};
-
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
 		[Fonts.bold]: require('../assets/fonts/HarmoniaSansProCyr-Bold.otf'),
@@ -35,19 +31,15 @@ export default function RootLayout() {
 	return (
 		<>
 			<SafeAreaView style={{ flex: 1, backgroundColor: Colors['brand-800'] }}>
-				<View style={{ flex: 1 }}>
-					<RootSiblingParent>
-						<View style={{ flex: 1 }}>
-							<Stack>
-								<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-								<Stack.Screen
-									name='modal'
-									options={{ presentation: 'modal', headerShown: false }}
-								/>
-							</Stack>
-						</View>
-					</RootSiblingParent>
-				</View>
+				<RootSiblingParent>
+					<Stack>
+						<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+						<Stack.Screen
+							name='modal'
+							options={{ presentation: 'modal', headerShown: false }}
+						/>
+					</Stack>
+				</RootSiblingParent>
 			</SafeAreaView>
 
 			<StatusBar style='light' />
