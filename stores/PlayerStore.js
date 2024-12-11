@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import TrackPlayer, { Capability } from 'react-native-track-player';
+import TrackPlayer, { Capability, State } from 'react-native-track-player';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const usePlayerStore = create((set, get) => ({
@@ -19,7 +19,7 @@ const usePlayerStore = create((set, get) => ({
 		try {
 			const playbackState = await TrackPlayer.getState();
 
-			if (playbackState === TrackPlayer.STATE_PLAYING) {
+			if (playbackState === State.Playing) {
 				await TrackPlayer.updateNowPlayingMetadata({
 					artwork: value
 						? value
@@ -33,18 +33,12 @@ const usePlayerStore = create((set, get) => ({
 	setIsLoading: (value) => set({ isLoading: value }),
 
 	setupPlayer: async () => {
-		const isSetup = await AsyncStorage.getItem('playerSetupComplete');
-		if (isSetup === 'true') {
-			return;
-		}
-
 		try {
 			await TrackPlayer.setupPlayer();
 			await TrackPlayer.updateOptions({
 				capabilities: [
 					Capability.Play,
 					Capability.Pause,
-					Capability.Stop,
 					Capability.SeekTo,
 					Capability.SkipToNext,
 					Capability.SkipToPrevious,
@@ -52,14 +46,14 @@ const usePlayerStore = create((set, get) => ({
 				compactCapabilities: [
 					Capability.Play,
 					Capability.Pause,
-					Capability.Stop,
+					Capability.SeekTo,
 					Capability.SkipToNext,
 					Capability.SkipToPrevious,
 				],
 			});
 			await AsyncStorage.setItem('playerSetupComplete', 'true');
-		} catch (error) {
-			console.error('Ошибка при инициализации TrackPlayer:', error);
+		} catch {
+			return;
 		}
 	},
 
