@@ -11,6 +11,10 @@ import { Fonts } from '../constants/Fonts';
 
 SplashScreen.preventAutoHideAsync();
 
+export const unstable_settings = {
+	initialRouteName: 'index',
+};
+
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
 		[Fonts.bold]: require('../assets/fonts/HarmoniaSansProCyr-Bold.otf'),
