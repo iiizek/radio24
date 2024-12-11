@@ -1,5 +1,4 @@
 {
-	"main": "index.js",
 	"expo": {
 		"name": "RADIO24",
 		"slug": "radio24",
@@ -9,17 +8,13 @@
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": false,
-		"entryPoint": "./node_modules/expo-router/entry.js",
 		"splash": {
 			"image": "./assets/splash-icon.png",
 			"resizeMode": "contain",
 			"backgroundColor": "#ffffff"
 		},
 		"ios": {
-			"supportsTablet": false,
-			"infoPlist": {
-				"UIBackgroundModes": ["audio"]
-			}
+			"supportsTablet": false
 		},
 		"android": {
 			"adaptiveIcon": {
