@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import TrackPlayer, { Capability, State } from 'react-native-track-player';
+import useStreamsStore from './StreamsStore';
 
 const usePlayerStore = create((set, get) => ({
 	isLoading: false,
@@ -12,18 +13,35 @@ const usePlayerStore = create((set, get) => ({
 	setIsPlaying: (value) => set({ isPlaying: value }),
 	setIsChosen: (value) => set({ isChosen: value }),
 	setCurrentStream: async (value) => {
-		const { currentStream } = get();
+		const { currentStream, songCover, isChosen } = get();
+		if (JSON.stringify(currentStream) === JSON.stringify(value)) return;
 		set({ currentStream: value });
 
-		try {
-			const playbackState = await TrackPlayer.getState();
+		// Если поток ещё не выбран, не обновляем метаданные
+		if (!isChosen) return;
 
-			if (playbackState === State.Playing || playbackState === State.Paused) {
+		try {
+			// Получаем активный трек
+			const activeTrack = await TrackPlayer.getActiveTrack();
+
+			// Проверяем, существует ли активный трек
+			if (!activeTrack) {
+				console.warn(
+					'Активный трек отсутствует, метаданные не могут быть обновлены.'
+				);
+				return;
+			}
+
+			const { title, artist } = activeTrack;
+
+			// Обновляем метаданные, если они отличаются
+			if (title !== value?.title || artist !== value?.server_name) {
 				await TrackPlayer.updateNowPlayingMetadata({
-					title: `${currentStream?.artist} ${currentStream?.title ? '-' : ''} ${
-						currentStream?.title
-					}`,
-					artist: currentStream?.server_name,
+					title: `${value?.artist} ${value?.title ? '-' : ''} ${value?.title}`,
+					artist: value?.server_name,
+					artwork:
+						songCover ||
+						`${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`,
 				});
 			}
 		} catch (error) {
@@ -31,20 +49,33 @@ const usePlayerStore = create((set, get) => ({
 		}
 	},
 	setSongCover: async (value) => {
-		const { currentStream, songCover } = get();
+		const { currentStream, isChosen, songCover } = get();
+		if (songCover === value) return;
 		set({ songCover: value });
 
-		try {
-			const playbackState = await TrackPlayer.getState();
+		if (!isChosen) return;
 
-			if (
-				(playbackState === State.Playing || playbackState === State.Paused) &&
-				value !== songCover
-			) {
+		try {
+			const activeTrack = await TrackPlayer.getActiveTrack();
+
+			// Проверяем, существует ли активный трек
+			if (!activeTrack) {
+				console.warn(
+					'Активный трек отсутствует, метаданные не могут быть обновлены.'
+				);
+				return;
+			}
+
+			const { artwork } = activeTrack;
+			if (artwork !== value) {
 				await TrackPlayer.updateNowPlayingMetadata({
-					artwork: value
-						? value
-						: `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`,
+					title: `${currentStream?.artist} ${currentStream?.title ? '-' : ''} ${
+						currentStream?.title
+					}`,
+					artist: currentStream?.server_name,
+					artwork:
+						value ||
+						`${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`,
 				});
 			}
 		} catch (error) {
@@ -130,8 +161,9 @@ const usePlayerStore = create((set, get) => ({
 	},
 
 	togglePlayPause: async () => {
-		const { isPlaying } = get();
+		const { isPlaying, isChosen, isLoading } = get();
 
+		if (!isChosen || isLoading) return;
 		try {
 			if (isPlaying) {
 				await get().pauseStream();
@@ -140,6 +172,50 @@ const usePlayerStore = create((set, get) => ({
 			}
 		} catch (error) {
 			console.error('Ошибка при переключении воспроизведения:', error);
+		}
+	},
+
+	skipStream: async (direction) => {
+		const {
+			currentStream,
+			setSongCover,
+			setCurrentStream,
+			playStream,
+			isLoading,
+		} = get();
+		const streams = useStreamsStore.getState().streams;
+
+		const currentIndex = streams.findIndex(
+			(stream) => stream.listen_url === currentStream.listen_url
+		);
+		if (currentIndex === -1) return;
+
+		const skipMethod = async (stream) => {
+			if (isLoading) return;
+			await setSongCover(null);
+			await setCurrentStream(stream);
+			await playStream(stream.stream_url);
+		};
+
+		switch (direction) {
+			case 'next':
+				if (currentIndex === streams.length - 1) {
+					skipMethod(streams[0]);
+				} else {
+					skipMethod(streams[currentIndex + 1]);
+				}
+
+				break;
+			case 'prev':
+				if (currentIndex === 0) {
+					skipMethod(streams[streams.length - 1]);
+				} else {
+					skipMethod(streams[currentIndex - 1]);
+				}
+
+				break;
+			default:
+				break;
 		}
 	},
 }));

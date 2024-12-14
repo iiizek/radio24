@@ -20,7 +20,7 @@ const StreamItem = memo(({ cover, name, description, id, index }) => {
 	} = usePlayerStore();
 	const { streams } = useStreamsStore();
 
-	const handleChooseStream = () => {
+	const handleChooseStream = async () => {
 		const currentStream = streams.find((stream) => stream.listen_url === id);
 		if (!currentStream) {
 			Toast.show('Поток не найден', {
@@ -34,10 +34,15 @@ const StreamItem = memo(({ cover, name, description, id, index }) => {
 			return;
 		}
 		if (isLoading) return;
-		setSongCover(null);
-		setCurrentStream(currentStream);
-		setIsChosen(true);
-		playStream(currentStream.stream_url);
+
+		try {
+			await setSongCover(null);
+			await setCurrentStream(currentStream);
+			setIsChosen(true);
+			await playStream(currentStream.stream_url);
+		} catch (error) {
+			console.error('Ошибка при выборе потока:', error);
+		}
 	};
 
 	const isChosen = currentStream?.listen_url === id;

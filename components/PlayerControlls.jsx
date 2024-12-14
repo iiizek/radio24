@@ -26,43 +26,15 @@ import { Colors } from '../constants/Colors';
 import SearchMusic from './SearchMusic';
 
 const PlayerControls = () => {
-	const { streams } = useStreamsStore();
 	const {
 		isPlaying,
 		currentStream,
-		playStream,
 		togglePlayPause,
-		setSongCover,
-		setCurrentStream,
 		isLoading,
 		isChosen,
+		skipStream,
 	} = usePlayerStore();
 	const { favorites, addFavorite, removeFavorite } = useFavoritesStore();
-
-	const handleSkip = (method) => {
-		const currentIndex = streams.findIndex(
-			(stream) => stream.listen_url === currentStream.listen_url
-		);
-		if (currentIndex === -1) return;
-		switch (method) {
-			case 'next':
-				if (currentIndex === streams.length - 1) return;
-				if (isLoading) return;
-				setSongCover(null);
-				setCurrentStream(streams[currentIndex + 1]);
-				playStream(streams[currentIndex + 1].stream_url);
-				break;
-			case 'prev':
-				if (currentIndex === 0) return;
-				if (isLoading) return;
-				setSongCover(null);
-				setCurrentStream(streams[currentIndex - 1]);
-				playStream(streams[currentIndex - 1].stream_url);
-				break;
-			default:
-				break;
-		}
-	};
 
 	const isFavorite = favorites.some(
 		(stream) => stream.listen_url === currentStream?.listen_url
@@ -84,7 +56,7 @@ const PlayerControls = () => {
 			)}
 
 			<TouchableOpacity
-				onPress={isChosen ? () => handleSkip('prev') : () => {}}
+				onPress={isChosen ? () => skipStream('prev') : () => {}}
 				activeOpacity={0.5}
 			>
 				<SkipBackIcon strokeWidth={2.1} size={42} color={Colors['brand-800']} />
@@ -113,7 +85,7 @@ const PlayerControls = () => {
 			</View>
 
 			<TouchableOpacity
-				onPress={isChosen ? () => handleSkip('next') : () => {}}
+				onPress={isChosen ? () => skipStream('next') : () => {}}
 				activeOpacity={0.5}
 			>
 				<SkipForwardIcon

@@ -3,6 +3,7 @@ import usePlayerStore from '../stores/PlayerStore';
 
 const resumeStream = usePlayerStore.getState().resumeStream;
 const pauseStream = usePlayerStore.getState().pauseStream;
+const skipStream = usePlayerStore.getState().skipStream;
 
 export const playbackService = async function () {
 	const onPlay = async () => {
@@ -23,17 +24,33 @@ export const playbackService = async function () {
 		}
 	};
 
+	const onSkip = async (direction) => {
+		try {
+			console.log('remote skip');
+			await skipStream(direction);
+		} catch (error) {
+			console.error('Ошибка в обработчике RemoteSkip:', error);
+		}
+	};
+
 	const playListener = TrackPlayer.addEventListener(Event.RemotePlay, onPlay);
 	const pauseListener = TrackPlayer.addEventListener(
 		Event.RemotePause,
 		onPause
 	);
-
-	console.log('Play listener:', playListener);
-	console.log('Pause listener:', pauseListener);
+	const skipToNextListener = TrackPlayer.addEventListener(
+		Event.RemoteNext,
+		() => onSkip('next')
+	);
+	const skipToPreviousListener = TrackPlayer.addEventListener(
+		Event.RemotePrevious,
+		() => onSkip('previous')
+	);
 
 	return () => {
 		playListener.remove();
 		pauseListener.remove();
+		skipToNextListener.remove();
+		skipToPreviousListener.remove();
 	};
 };
