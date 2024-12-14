@@ -65,7 +65,7 @@ const usePlayerStore = create((set, get) => ({
 				compactCapabilities: [Capability.Play, Capability.Pause],
 			});
 		} catch {
-			return;
+			console.warn('Player уже инициализирован');
 		}
 	},
 
