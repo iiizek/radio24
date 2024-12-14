@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import TrackPlayer, { Capability, State } from 'react-native-track-player';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const usePlayerStore = create((set, get) => ({
 	isLoading: false,
@@ -9,17 +8,39 @@ const usePlayerStore = create((set, get) => ({
 	currentStream: null,
 	songCover: null,
 
+	setIsLoading: (value) => set({ isLoading: value }),
 	setIsPlaying: (value) => set({ isPlaying: value }),
 	setIsChosen: (value) => set({ isChosen: value }),
-	setCurrentStream: (value) => set({ currentStream: value }),
-	setSongCover: async (value) => {
+	setCurrentStream: async (value) => {
 		const { currentStream } = get();
+		set({ currentStream: value });
+
+		try {
+			const playbackState = await TrackPlayer.getState();
+
+			if (playbackState === State.Playing || playbackState === State.Paused) {
+				await TrackPlayer.updateNowPlayingMetadata({
+					title: `${currentStream?.artist} ${currentStream?.title ? '-' : ''} ${
+						currentStream?.title
+					}`,
+					artist: currentStream?.server_name,
+				});
+			}
+		} catch (error) {
+			console.error('Ошибка при обновлении метаданных:', error);
+		}
+	},
+	setSongCover: async (value) => {
+		const { currentStream, songCover } = get();
 		set({ songCover: value });
 
 		try {
 			const playbackState = await TrackPlayer.getState();
 
-			if (playbackState === State.Playing) {
+			if (
+				(playbackState === State.Playing || playbackState === State.Paused) &&
+				value !== songCover
+			) {
 				await TrackPlayer.updateNowPlayingMetadata({
 					artwork: value
 						? value
@@ -30,7 +51,6 @@ const usePlayerStore = create((set, get) => ({
 			console.error('Ошибка при обновлении метаданных:', error);
 		}
 	},
-	setIsLoading: (value) => set({ isLoading: value }),
 
 	setupPlayer: async () => {
 		try {
@@ -39,19 +59,11 @@ const usePlayerStore = create((set, get) => ({
 				capabilities: [
 					Capability.Play,
 					Capability.Pause,
-					Capability.SeekTo,
 					Capability.SkipToNext,
 					Capability.SkipToPrevious,
 				],
-				compactCapabilities: [
-					Capability.Play,
-					Capability.Pause,
-					Capability.SeekTo,
-					Capability.SkipToNext,
-					Capability.SkipToPrevious,
-				],
+				compactCapabilities: [Capability.Play, Capability.Pause],
 			});
-			await AsyncStorage.setItem('playerSetupComplete', 'true');
 		} catch {
 			return;
 		}
@@ -107,6 +119,8 @@ const usePlayerStore = create((set, get) => ({
 	resumeStream: async () => {
 		try {
 			set({ isLoading: true });
+			const { duration } = await TrackPlayer.getProgress();
+			await TrackPlayer.seekTo(duration);
 			await TrackPlayer.play();
 			set({ isPlaying: true, isLoading: false });
 		} catch (error) {

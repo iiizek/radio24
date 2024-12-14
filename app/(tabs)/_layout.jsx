@@ -1,5 +1,4 @@
 import { Tabs } from 'expo-router';
-import { usePathname } from 'expo-router';
 
 import { RadioIcon, HeartIcon, InfoIcon } from 'lucide-react-native';
 
@@ -7,8 +6,6 @@ import { Colors } from '../../constants/Colors';
 import { Fonts } from '../../constants/Fonts';
 
 const TabsLayout = () => {
-	const path = usePathname();
-
 	return (
 		<Tabs
 			initialRouteName='index'
@@ -19,7 +16,7 @@ const TabsLayout = () => {
 					backgroundColor: Colors['brand-800'],
 					paddingHorizontal: 32,
 					paddingTop: 2,
-					height: 62,
+					height: 60,
 					borderTopWidth: 0,
 				},
 				tabBarLabelStyle: {
@@ -34,11 +31,6 @@ const TabsLayout = () => {
 					borderBottomWidth: 0,
 				},
 				headerStatusBarHeight: 0,
-				headerTitleStyle: {
-					fontFamily: Fonts.bold,
-					color: Colors['theme-50'],
-					fontSize: path === '/' ? 18 : 24,
-				},
 				headerTitleAlign: 'center',
 			}}
 		>
@@ -48,6 +40,11 @@ const TabsLayout = () => {
 					tabBarIcon: ({ color }) => <RadioIcon size={28} color={color} />,
 					tabBarLabel: 'Потоки',
 					headerTitle: 'РАДИО24 - Яркие моменты вместе! 🔥',
+					headerTitleStyle: {
+						fontSize: 18,
+						fontFamily: Fonts.bold,
+						color: Colors['theme-50'],
+					},
 				}}
 			/>
 			<Tabs.Screen
@@ -56,6 +53,11 @@ const TabsLayout = () => {
 					tabBarIcon: ({ color }) => <HeartIcon size={28} color={color} />,
 					tabBarLabel: 'Избранное',
 					headerTitle: 'Любимые потоки ❤️‍🔥',
+					headerTitleStyle: {
+						fontSize: 24,
+						fontFamily: Fonts.bold,
+						color: Colors['theme-50'],
+					},
 				}}
 			/>
 			<Tabs.Screen
@@ -64,6 +66,11 @@ const TabsLayout = () => {
 					tabBarIcon: ({ color }) => <InfoIcon size={28} color={color} />,
 					tabBarLabel: 'Контакты',
 					headerTitle: 'Контактная информация',
+					headerTitleStyle: {
+						fontSize: 24,
+						fontFamily: Fonts.bold,
+						color: Colors['theme-50'],
+					},
 				}}
 			/>
 		</Tabs>
