@@ -8,23 +8,26 @@
 			"developmentClient": true,
 			"distribution": "internal",
 			"env": {
-				"EXPO_PUBLIC_API_URL": "http://185.41.163.70:8054",
-				"EXPO_PUBLIC_ADMIN_URL": "http://185.41.163.70:8055"
-			}
+				"EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
+				"EXPO_PUBLIC_ADMIN_URL": "EXPO_PUBLIC_ADMIN_URL"
+			},
+			"channel": "development"
 		},
 		"preview": {
 			"distribution": "internal",
 			"env": {
-				"EXPO_PUBLIC_API_URL": "http://185.41.163.70:8054",
-				"EXPO_PUBLIC_ADMIN_URL": "http://185.41.163.70:8055"
-			}
+				"EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
+				"EXPO_PUBLIC_ADMIN_URL": "EXPO_PUBLIC_ADMIN_URL"
+			},
+			"channel": "preview"
 		},
 		"production": {
 			"autoIncrement": true,
 			"env": {
-				"EXPO_PUBLIC_API_URL": "http://185.41.163.70:8054",
-				"EXPO_PUBLIC_ADMIN_URL": "http://185.41.163.70:8055"
-			}
+				"EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
+				"EXPO_PUBLIC_ADMIN_URL": "EXPO_PUBLIC_ADMIN_URL"
+			},
+			"channel": "production"
 		}
 	},
 	"submit": {
