@@ -50,7 +50,7 @@ const useTimerStore = create((set, get) => ({
 				clearInterval(interval);
 				usePlayerStore.getState().pauseStream();
 				resetTimer();
-				alert('Время истекло!');
+				alert('Время истекло - проигрывание остановлено.');
 			}
 		}, 1000);
 
