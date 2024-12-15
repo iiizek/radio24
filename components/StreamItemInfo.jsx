@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 		gap: 4,
 		overflow: 'hidden',
+		width: '100%',
+	},
+
+	descWrapper: {
+		width: '100%',
 	},
 
 	streamTitle: {

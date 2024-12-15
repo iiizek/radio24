@@ -40,12 +40,15 @@ const FavoritesScreen = () => {
 				<FlatList
 					style={styles.flatList}
 					data={favorites}
-					renderItem={({ item }) => (
+					renderItem={({ item, index }) => (
 						<StreamItem
 							id={item.listen_url}
 							cover={item.stream_cover}
 							name={item.server_name}
-							description={item.server_description}
+							description={`${item.artist} ${item.title ? '-' : ''} ${
+								item.title
+							}`}
+							index={index}
 						/>
 					)}
 					keyExtractor={(item) => item.listen_url}

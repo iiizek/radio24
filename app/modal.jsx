@@ -1,6 +1,14 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	TouchableOpacity,
+	ScrollView,
+} from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { useNavigation } from 'expo-router';
+import { Link, useNavigation } from 'expo-router';
+import { Svg, Path } from 'react-native-svg';
 
 import DrawerModal from '../components/DrawerModal';
 
@@ -10,17 +18,18 @@ import usePlayerStore from '../stores/PlayerStore';
 
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
-import { currentStreamInfo } from '../constants/Data';
+import { currentStreamInfo, musicLinksData } from '../constants/Data';
 
 import theme from '../utils/colorScheme';
 import PlayerControls from '../components/PlayerControlls';
 import CurrentStreamInfoItems from '../components/CurrentStreamInfoItems';
+import { isLoading } from 'expo-font';
 
 const modal = () => {
 	const navigation = useNavigation();
 	const [modalInfo, setModalInfo] = useState(currentStreamInfo);
 
-	const { currentStream, isChosen, songCover } = usePlayerStore();
+	const { currentStream, isChosen, songCover, isLoading } = usePlayerStore();
 	const coverUrl = isChosen
 		? `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`
 		: null;
@@ -76,13 +85,31 @@ const modal = () => {
 						{isChosen ? currentStream.server_name : 'Поток не выбран'}
 					</Text>
 					<Text style={styles.trackTitle}>
-						{isChosen
+						{isChosen && currentStream.title !== null
 							? `${currentStream?.artist} ${currentStream?.title ? '-' : ''} ${
 									currentStream?.title
 							  }`
 							: 'Выбирайте и слушайте!'}
 					</Text>
 				</View>
+			</View>
+
+			<View>
+				<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+					<View style={styles.musicLinks}>
+						{isChosen &&
+							musicLinksData.map((item) => (
+								<Link asChild key={item.id} href={item.url}>
+									<TouchableOpacity activeOpacity={0.5}>
+										<View style={styles.musicButton}>
+											<Text style={styles.musicButtonText}>{item.title}</Text>
+											{item.icon}
+										</View>
+									</TouchableOpacity>
+								</Link>
+							))}
+					</View>
+				</ScrollView>
 			</View>
 
 			<PlayerControls />
@@ -98,7 +125,8 @@ const styles = StyleSheet.create({
 			theme === 'dark' ? Colors['theme-950'] : Colors['theme-50'],
 		flex: 1,
 		justifyContent: 'space-between',
-		gap: 32,
+		gap: 24,
+		height: '100%',
 	},
 
 	header: {
@@ -155,5 +183,37 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		color: theme === 'dark' ? Colors['theme-400'] : Colors['theme-600'],
 		paddingHorizontal: 16,
+	},
+
+	musicLinks: {
+		paddingHorizontal: 24,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'stretch',
+		gap: 12,
+		flex: 0,
+	},
+
+	musicButton: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderColor: Colors['brand-800'],
+		gap: 8,
+		borderWidth: 1,
+		borderRadius: 4,
+		paddingHorizontal: 12,
+		paddingVertical: 8,
+		flexShrink: 0,
+		flexGrow: 0,
+		minWidth: 60,
+		minHeight: 40,
+	},
+
+	musicButtonText: {
+		fontFamily: Fonts.regular,
+		fontSize: 20,
+		textAlign: 'center',
+		color: Colors['brand-800'],
 	},
 });

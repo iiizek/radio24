@@ -14,16 +14,14 @@ import {
 	SkipBackIcon,
 	SkipForwardIcon,
 	HeartIcon,
-	SearchIcon,
+	ClockIcon,
 } from 'lucide-react-native';
 
 import usePlayerStore from '../stores/PlayerStore';
-import useStreamsStore from '../stores/StreamsStore';
 import useFavoritesStore from '../stores/FavoritesStore';
 
 import { Colors } from '../constants/Colors';
-
-import SearchMusic from './SearchMusic';
+import TimerForm from './TimerForm';
 
 const PlayerControls = () => {
 	const {
@@ -44,12 +42,12 @@ const PlayerControls = () => {
 		<View style={styles.controls}>
 			{isChosen ? (
 				<DrawerModal
-					name='Найти песню'
+					name='Таймер отключения'
 					icon={
-						<SearchIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+						<ClockIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
 					}
 				>
-					<SearchMusic />
+					<TimerForm />
 				</DrawerModal>
 			) : (
 				<SearchIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
@@ -129,7 +127,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingHorizontal: 24,
 		paddingVertical: 16,
-		flex: 1,
 	},
 
 	playButton: {

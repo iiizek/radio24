@@ -1,5 +1,8 @@
 import { create } from 'zustand';
-import TrackPlayer, { Capability, State } from 'react-native-track-player';
+import TrackPlayer, {
+	Capability,
+	AppKilledPlaybackBehavior,
+} from 'react-native-track-player';
 import useStreamsStore from './StreamsStore';
 
 const usePlayerStore = create((set, get) => ({
@@ -85,7 +88,9 @@ const usePlayerStore = create((set, get) => ({
 
 	setupPlayer: async () => {
 		try {
-			await TrackPlayer.setupPlayer();
+			await TrackPlayer.setupPlayer({
+				autoHandleInterruptions: true,
+			});
 			await TrackPlayer.updateOptions({
 				capabilities: [
 					Capability.Play,
@@ -94,6 +99,10 @@ const usePlayerStore = create((set, get) => ({
 					Capability.SkipToPrevious,
 				],
 				compactCapabilities: [Capability.Play, Capability.Pause],
+				android: {
+					appKilledPlaybackBehavior:
+						AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+				},
 			});
 		} catch {
 			console.warn('Player уже инициализирован');

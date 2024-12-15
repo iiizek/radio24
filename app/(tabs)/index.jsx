@@ -16,7 +16,8 @@ import CurrentStream from '../../components/CurrentStream';
 const HomeScreen = () => {
 	const { streams, setStreams } = useStreamsStore();
 	const { currentStream, setCurrentStream, setSongCover } = usePlayerStore();
-	const { getFavoritesFromStorage } = useFavoritesStore();
+	const { getFavoritesFromStorage, updateFavorites, favorites } =
+		useFavoritesStore();
 
 	const fetchSongCover = async () => {
 		if (currentStream) {
@@ -40,20 +41,32 @@ const HomeScreen = () => {
 	useEffect(() => {
 		socket.connect();
 
-		socket.on('radio-streams', (data) => {
-			setStreams(data);
-			getFavoritesFromStorage();
+		socket.on('radio-streams', async (data) => {
+			if (data) {
+				setStreams(data);
+				if (!favorites.length) {
+					await getFavoritesFromStorage();
+				}
+				updateFavorites(data);
 
-			const updatedStream = data.find(
-				(stream) => stream.listen_url === currentStream?.listen_url
-			);
-			setCurrentStream(updatedStream);
-			fetchSongCover();
+				const updatedStream = data.find(
+					(stream) => stream?.listen_url === currentStream?.listen_url
+				);
+				if (updatedStream) {
+					setCurrentStream(updatedStream);
+				}
+			}
 		});
 
 		return () => {
 			socket.off('radio-streams');
 		};
+	}, [currentStream]);
+
+	useEffect(() => {
+		if (currentStream) {
+			fetchSongCover();
+		}
 	}, [currentStream]);
 
 	return (
@@ -67,7 +80,9 @@ const HomeScreen = () => {
 							id={item.listen_url}
 							cover={item.stream_cover}
 							name={item.server_name}
-							description={item.server_description}
+							description={`${item.artist} ${item.title ? '-' : ''} ${
+								item.title
+							}`}
 							index={index}
 						/>
 					)}
