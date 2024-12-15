@@ -37,6 +37,10 @@ export default function RootLayout() {
 							name='modal'
 							options={{ presentation: 'modal', headerShown: false }}
 						/>
+						<Stack.Screen
+							name='poster'
+							options={{ headerShown: false, presentation: 'modal' }}
+						/>
 						<Stack.Screen name='+not-found' options={{ headerShown: false }} />
 					</Stack>
 				</RootSiblingParent>

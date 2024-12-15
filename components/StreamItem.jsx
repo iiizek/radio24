@@ -11,6 +11,7 @@ import useStreamsStore from '../stores/StreamsStore';
 const StreamItem = memo(({ cover, name, description, id, index }) => {
 	const {
 		setIsChosen,
+		setIsLoading,
 		setCurrentStream,
 		playStream,
 		setSongCover,
@@ -36,12 +37,15 @@ const StreamItem = memo(({ cover, name, description, id, index }) => {
 		if (isLoading) return;
 
 		try {
+			await setIsLoading(true);
 			await setSongCover(null);
 			await setCurrentStream(currentStream);
 			setIsChosen(true);
 			await playStream(currentStream.stream_url);
+			setIsLoading(false);
 		} catch (error) {
 			console.error('Ошибка при выборе потока:', error);
+			setIsLoading(false);
 		}
 	};
 

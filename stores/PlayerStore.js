@@ -48,7 +48,7 @@ const usePlayerStore = create((set, get) => ({
 				});
 			}
 		} catch (error) {
-			console.error('Ошибка при обновлении метаданных:', error);
+			console.warn('Ошибка при обновлении метаданных:', error);
 		}
 	},
 	setSongCover: async (value) => {
@@ -82,7 +82,7 @@ const usePlayerStore = create((set, get) => ({
 				});
 			}
 		} catch (error) {
-			console.error('Ошибка при обновлении метаданных:', error);
+			console.warn('Ошибка при обновлении метаданных:', error);
 		}
 	},
 
@@ -191,6 +191,7 @@ const usePlayerStore = create((set, get) => ({
 			setCurrentStream,
 			playStream,
 			isLoading,
+			setIsLoading,
 		} = get();
 		const streams = useStreamsStore.getState().streams;
 
@@ -201,9 +202,11 @@ const usePlayerStore = create((set, get) => ({
 
 		const skipMethod = async (stream) => {
 			if (isLoading) return;
+			await setIsLoading(true);
 			await setSongCover(null);
 			await setCurrentStream(stream);
 			await playStream(stream.stream_url);
+			setIsLoading(false);
 		};
 
 		switch (direction) {

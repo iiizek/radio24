@@ -111,6 +111,7 @@ const modal = () => {
 				<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 					<View style={styles.musicLinks}>
 						{isChosen &&
+							currentStream.title &&
 							musicLinksData.map((item) => (
 								<Link asChild key={item.id} href={item.url}>
 									<TouchableOpacity activeOpacity={0.5}>
