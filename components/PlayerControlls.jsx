@@ -50,7 +50,7 @@ const PlayerControls = () => {
 					<TimerForm />
 				</DrawerModal>
 			) : (
-				<SearchIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+				<ClockIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
 			)}
 
 			<TouchableOpacity

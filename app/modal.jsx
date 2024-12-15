@@ -15,6 +15,7 @@ import DrawerModal from '../components/DrawerModal';
 import { ChevronLeft, InfoIcon } from 'lucide-react-native';
 
 import usePlayerStore from '../stores/PlayerStore';
+import useTimerStore from '../stores/TimerStore';
 
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
@@ -23,12 +24,12 @@ import { currentStreamInfo, musicLinksData } from '../constants/Data';
 import theme from '../utils/colorScheme';
 import PlayerControls from '../components/PlayerControlls';
 import CurrentStreamInfoItems from '../components/CurrentStreamInfoItems';
-import { isLoading } from 'expo-font';
 
 const modal = () => {
 	const navigation = useNavigation();
 	const [modalInfo, setModalInfo] = useState(currentStreamInfo);
 
+	const { timeLeft, selectedTime } = useTimerStore();
 	const { currentStream, isChosen, songCover, isLoading } = usePlayerStore();
 	const coverUrl = isChosen
 		? `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`
@@ -66,6 +67,18 @@ const modal = () => {
 						<ChevronLeft size={48} color={Colors['brand-800']} />
 					</TouchableOpacity>
 				</View>
+
+				{selectedTime && (
+					<View style={styles.timer}>
+						<Text style={styles.timerText}>
+							{`${
+								timeLeft > 3600 ? `${Math.floor(timeLeft / 3600)} ч.` : ''
+							} ${Math.floor((timeLeft % 3600) / 60)} мин. ${
+								timeLeft % 60
+							} сек. `}
+						</Text>
+					</View>
+				)}
 
 				<DrawerModal
 					icon={<InfoIcon size={48} color={Colors['brand-800']} />}
@@ -140,6 +153,21 @@ const styles = StyleSheet.create({
 	backButton: {
 		overflow: 'hidden',
 		borderRadius: 9999,
+	},
+
+	timer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: Colors['brand-800'],
+		borderRadius: 4,
+		paddingHorizontal: 8,
+		paddingVertical: 8,
+	},
+
+	timerText: {
+		fontFamily: Fonts.regular,
+		fontSize: 18,
+		color: Colors['theme-50'],
 	},
 
 	content: {
