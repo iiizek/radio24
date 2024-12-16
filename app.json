@@ -42,7 +42,18 @@
 				"projectId": "4d521f26-637f-49bc-8a9b-80162131c617"
 			}
 		},
-		"plugins": ["expo-router", "expo-font"],
+		"plugins": [
+			"expo-router",
+			"expo-font",
+			[
+				"expo-build-properties",
+				{
+					"android": {
+						"usesCleartextTraffic": true
+					}
+				}
+			]
+		],
 		"runtimeVersion": {
 			"policy": "appVersion"
 		},
