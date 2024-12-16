@@ -22,6 +22,17 @@ const poster = () => {
 
 	return (
 		<View style={styles.container}>
+			<View style={styles.blurCopyImage}>
+				<Image
+					style={styles.bluredImage}
+					source={{
+						uri: `${ADMIN_URL}/assets/${lastPoster?.poster_image}`,
+					}}
+					onError={() => router.replace('/')}
+					blurRadius={20}
+				/>
+				<View style={styles.darkBackground}></View>
+			</View>
 			<View style={styles.imageContainer}>
 				<Image
 					style={styles.image}
@@ -63,7 +74,31 @@ const styles = StyleSheet.create({
 		height: '100%',
 	},
 
+	blurCopyImage: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '100%',
+		height: '100%',
+	},
+
+	bluredImage: {
+		width: '100%',
+		height: '100%',
+		resizeMode: 'cover',
+	},
+
+	darkBackground: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '100%',
+		height: '100%',
+		backgroundColor: 'rgba(0, 0, 0, 0.3)',
+	},
+
 	imageContainer: {
+		padding: 12,
 		width: '100%',
 		height: '100%',
 		flex: 1,
@@ -72,7 +107,7 @@ const styles = StyleSheet.create({
 	image: {
 		width: '100%',
 		height: '100%',
-		resizeMode: 'cover',
+		resizeMode: 'contain',
 	},
 
 	closeButton: {
@@ -81,6 +116,7 @@ const styles = StyleSheet.create({
 		padding: 12,
 		borderRadius: 8,
 		width: '100%',
+		zIndex: 100,
 	},
 
 	closeButtonText: {

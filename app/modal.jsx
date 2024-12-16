@@ -1,14 +1,6 @@
-import {
-	StyleSheet,
-	Text,
-	View,
-	Image,
-	TouchableOpacity,
-	ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigation } from 'expo-router';
-import { Svg, Path } from 'react-native-svg';
 
 import DrawerModal from '../components/DrawerModal';
 
@@ -31,7 +23,7 @@ const modal = () => {
 	const [modalInfo, setModalInfo] = useState(currentStreamInfo);
 
 	const { timeLeft, selectedTime } = useTimerStore();
-	const { currentStream, isChosen, songCover, isLoading } = usePlayerStore();
+	const { currentStream, isChosen, songCover } = usePlayerStore();
 	const coverUrl = isChosen
 		? `${ADMIN_URL}/assets/${currentStream?.stream_cover}`
 		: null;
@@ -81,13 +73,7 @@ const modal = () => {
 					</View>
 				)}
 
-				<DrawerModal
-					icon={<InfoIcon size={48} color={Colors['brand-800']} />}
-					name={'О потоке'}
-					data={modalInfo}
-				>
-					<CurrentStreamInfoItems data={modalInfo} />
-				</DrawerModal>
+				<View style={{ width: 48, height: 48 }}></View>
 			</View>
 
 			<View style={styles.content}>
@@ -108,23 +94,22 @@ const modal = () => {
 				</View>
 			</View>
 
-			<View>
-				<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-					<View style={styles.musicLinks}>
-						{isChosen &&
-							currentStream.title &&
-							musicLinksData.map((item) => (
-								<Link asChild key={item.id} href={item.url}>
-									<TouchableOpacity activeOpacity={0.5}>
-										<View style={styles.musicButton}>
-											<Text style={styles.musicButtonText}>{item.title}</Text>
-											{item.icon}
-										</View>
-									</TouchableOpacity>
-								</Link>
-							))}
-					</View>
-				</ScrollView>
+			<View style={styles.musicLinksWrapper}>
+				<View style={styles.musicLinks}>
+					{isChosen &&
+						currentStream.title &&
+						musicLinksData.map((item) => (
+							<Link
+								asChild
+								key={item.id}
+								href={`${item.url}${currentStream?.artist} ${currentStream?.title}`}
+							>
+								<TouchableOpacity activeOpacity={0.5}>
+									<View style={styles.musicButton}>{item.icon}</View>
+								</TouchableOpacity>
+							</Link>
+						))}
+				</View>
 			</View>
 
 			<PlayerControls />
@@ -168,7 +153,7 @@ const styles = StyleSheet.create({
 
 	timerText: {
 		fontFamily: Fonts.regular,
-		fontSize: 18,
+		fontSize: 16,
 		color: Colors['theme-50'],
 	},
 
@@ -215,11 +200,16 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 	},
 
+	musicLinksWrapper: {
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+
 	musicLinks: {
 		paddingHorizontal: 24,
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'stretch',
+		alignItems: 'center',
 		gap: 12,
 		flex: 0,
 	},
@@ -232,11 +222,11 @@ const styles = StyleSheet.create({
 		gap: 8,
 		borderWidth: 1,
 		borderRadius: 4,
-		paddingHorizontal: 12,
-		paddingVertical: 8,
+		paddingHorizontal: 10,
+		paddingVertical: 10,
 		flexShrink: 0,
 		flexGrow: 0,
-		minWidth: 60,
+		minWidth: 40,
 		minHeight: 40,
 	},
 

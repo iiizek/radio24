@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import usePlayerStore from './PlayerStore';
 
 const useTimerStore = create((set, get) => ({
-	selectedTime: null, // Время окончания таймера
-	timeLeft: null, // Оставшееся время
-	timerInterval: null, // Ссылка на интервал
+	selectedTime: null,
+	timeLeft: null,
+	timerInterval: null,
 
 	// Устанавливаем время окончания таймера
 	setSelectedTime: (time) => {
@@ -23,7 +23,12 @@ const useTimerStore = create((set, get) => ({
 	},
 
 	// Обновляем оставшееся время
-	setTimeLeft: (time) => set({ timeLeft: time }),
+	setTimeLeft: (time) => {
+		const { timeLeft } = get();
+		if (time !== timeLeft) {
+			set({ timeLeft: time });
+		}
+	},
 
 	// Сбрасываем таймер
 	resetTimer: () => {
@@ -50,7 +55,6 @@ const useTimerStore = create((set, get) => ({
 				clearInterval(interval);
 				usePlayerStore.getState().pauseStream();
 				resetTimer();
-				alert('Время истекло - проигрывание остановлено.');
 			}
 		}, 1000);
 

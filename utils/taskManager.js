@@ -57,16 +57,16 @@ export const startBackgroundFetch = async () => {
 	console.log('Статус фоновой задачи:', status);
 
 	if (status == 3) {
+		const registeredTasks = await TaskManager.getRegisteredTasksAsync();
+
 		console.log('Регистрация фоновой задачи');
 		await BackgroundFetch.registerTaskAsync(FETCH_POSTERS_TASK, {
-			minimumInterval: 60 * 1, // Интервал в секундах
+			minimumInterval: 60 * 15, // Интервал в секундах
 			stopOnTerminate: false, // Не останавливать при завершении приложения
 			startOnBoot: true, // Запускать при перезагрузке устройства
 		});
 
 		console.log('Фоновая задача зарегистрирована✨');
-
-		const registeredTasks = await TaskManager.getRegisteredTasksAsync();
 		console.log('Зарегистрированные задачи:', registeredTasks);
 		const status = await BackgroundFetch.getStatusAsync();
 		console.log('Статус фоновой задачи:', status);
