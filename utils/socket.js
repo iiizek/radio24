@@ -1,6 +1,8 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = process.env.EXPO_PUBLIC_API_URL;
+import { API_URL } from '../constants/Environments';
+
+const SOCKET_URL = API_URL;
 
 const socket = io(SOCKET_URL, {
 	transports: ['websocket'],

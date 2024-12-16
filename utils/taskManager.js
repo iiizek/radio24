@@ -3,6 +3,8 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import { sendNotification } from './notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { API_URL } from '../constants/Environments';
+
 const FETCH_POSTERS_TASK = 'FETCH_POSTERS_TASK';
 
 const loadLastPostersId = async () => {
@@ -17,9 +19,7 @@ const saveLastPostersId = async (ids) => {
 const fetchPosters = async () => {
 	console.log('-- ЗАПУСК ФОНОВОЙ ЗАДАЧИ --');
 	try {
-		const response = await fetch(
-			`${process.env.EXPO_PUBLIC_API_URL}/api/posters`
-		);
+		const response = await fetch(`${API_URL}/api/posters`);
 		const posters = await response.json();
 
 		let lastPostersId = await loadLastPostersId();

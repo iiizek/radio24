@@ -8,8 +8,7 @@ import YandexMusicIcon from '../assets/icons/YandexMusicIcon.jsx';
 
 import { Colors } from './Colors.js';
 
-const title = usePlayerStore.getState().currentStream?.title;
-const artist = usePlayerStore.getState().currentStream?.artist;
+const currentStream = usePlayerStore.getState().currentStream;
 
 export const currentStreamInfo = {
 	Название: '-',
@@ -26,35 +25,35 @@ export const musicLinksData = [
 	{
 		id: 1,
 		title: 'Яндекс Музыка',
-		url: `https://music.yandex.ru/search?text=${artist} ${title}`,
+		url: `https://music.yandex.ru/search?text=${currentStream?.artist} ${currentStream?.title}`,
 		icon: <YandexMusicIcon width={24} height={24} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 2,
 		title: 'VK Музыка',
-		url: `https://vk.com/music?q=${artist} ${title}`,
+		url: `https://vk.com/music?q=${currentStream?.artist} ${currentStream?.title}`,
 		icon: <VkIcon width={24} height={24} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 3,
 		title: 'Zvuk',
-		url: `https://zvuk.com/search?query=${artist} ${title}`,
+		url: `https://zvuk.com/search?query=${currentStream?.artist} ${currentStream?.title}`,
 		icon: <ZvukIcon width={24} height={24} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 4,
 		title: 'Spotify',
-		url: `https://open.spotify.com/search/${artist} ${title}`,
+		url: `https://open.spotify.com/search/${currentStream?.artist} ${currentStream?.title}`,
 		icon: <SpotifyIcon width={24} height={24} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 5,
 		title: 'Apple Music',
-		url: `https://music.apple.com/ru/search?term=${artist} ${title}`,
+		url: `https://music.apple.com/ru/search?term=${currentStream?.artist} ${currentStream?.title}`,
 		icon: <AppleMusicIcon width={24} height={24} fill={Colors['brand-800']} />,
 	},
 ];

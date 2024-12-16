@@ -7,26 +7,17 @@
 		"development": {
 			"developmentClient": true,
 			"distribution": "internal",
-			"env": {
-				"EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
-				"EXPO_PUBLIC_ADMIN_URL": "EXPO_PUBLIC_ADMIN_URL"
-			},
+			"environment": "development",
 			"channel": "development"
 		},
 		"preview": {
 			"distribution": "internal",
-			"env": {
-				"EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
-				"EXPO_PUBLIC_ADMIN_URL": "EXPO_PUBLIC_ADMIN_URL"
-			},
+			"environment": "preview",
 			"channel": "preview"
 		},
 		"production": {
 			"autoIncrement": true,
-			"env": {
-				"EXPO_PUBLIC_API_URL": "EXPO_PUBLIC_API_URL",
-				"EXPO_PUBLIC_ADMIN_URL": "EXPO_PUBLIC_ADMIN_URL"
-			},
+			"environment": "production",
 			"channel": "production"
 		}
 	},

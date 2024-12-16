@@ -7,6 +7,7 @@ import usePostersStore from '../stores/PostersStore';
 
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
+import { ADMIN_URL } from '../constants/Environments';
 
 const poster = () => {
 	const router = useRouter();
@@ -25,7 +26,7 @@ const poster = () => {
 				<Image
 					style={styles.image}
 					source={{
-						uri: `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${lastPoster?.poster_image}`,
+						uri: `${ADMIN_URL}/assets/${lastPoster?.poster_image}`,
 					}}
 					onError={() => router.replace('/')}
 				/>

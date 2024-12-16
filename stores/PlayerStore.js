@@ -5,6 +5,8 @@ import TrackPlayer, {
 } from 'react-native-track-player';
 import useStreamsStore from './StreamsStore';
 
+import { ADMIN_URL } from '../constants/Environments';
+
 const usePlayerStore = create((set, get) => ({
 	isLoading: false,
 	isPlaying: false,
@@ -43,8 +45,7 @@ const usePlayerStore = create((set, get) => ({
 					title: `${value?.artist} ${value?.title ? '-' : ''} ${value?.title}`,
 					artist: value?.server_name,
 					artwork:
-						songCover ||
-						`${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`,
+						songCover || `${ADMIN_URL}/assets/${currentStream?.stream_cover}`,
 				});
 			}
 		} catch (error) {
@@ -77,8 +78,7 @@ const usePlayerStore = create((set, get) => ({
 					}`,
 					artist: currentStream?.server_name,
 					artwork:
-						value ||
-						`${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`,
+						value || `${ADMIN_URL}/assets/${currentStream?.stream_cover}`,
 				});
 			}
 		} catch (error) {
@@ -129,7 +129,7 @@ const usePlayerStore = create((set, get) => ({
 					currentStream?.title
 				}`,
 				artist: currentStream?.server_name,
-				artwork: `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`,
+				artwork: `${ADMIN_URL}/assets/${currentStream?.stream_cover}`,
 				isLiveStream: true,
 			});
 
@@ -233,94 +233,3 @@ const usePlayerStore = create((set, get) => ({
 }));
 
 export default usePlayerStore;
-
-// import { create } from 'zustand';
-// import { Audio } from 'expo-av';
-
-// const usePlayerStore = create((set, get) => ({
-// 	isLoading: false,
-// 	isPlaying: false,
-// 	isChosen: false,
-// 	currentStream: null,
-// 	audioInstance: null,
-// 	songCover: null,
-
-// 	setIsPlaying: (value) => set({ isPlaying: value }),
-// 	setIsChosen: (value) => set({ isChosen: value }),
-// 	setCurrentStream: (value) => set({ currentStream: value }),
-// 	setSongCover: (value) => set({ songCover: value }),
-// 	setIsLoading: (value) => set({ isLoading: value }),
-
-// 	playStream: async (streamUrl) => {
-// 		const { audioInstance } = get();
-
-// 		set({ isLoading: true });
-
-// 		if (audioInstance) {
-// 			await audioInstance.unloadAsync();
-// 			set({ audioInstance: null });
-// 		}
-
-// 		await Audio.setAudioModeAsync({
-// 			allowsRecordingIOS: false, // Отключаем запись
-// 			staysActiveInBackground: true, // Фоновое воспроизведение
-// 			playsInSilentModeIOS: true, // Игнорировать режим "Без звука"
-// 			shouldDuckAndroid: true,
-// 		});
-
-// 		try {
-// 			const { sound } = await Audio.Sound.createAsync(
-// 				{ uri: streamUrl },
-// 				{ shouldPlay: true }
-// 			);
-// 			set({ audioInstance: sound, isPlaying: true, isLoading: false });
-// 		} catch (error) {
-// 			set({ isLoading: false });
-// 			console.error('Ошибка при создании потока:', error);
-// 		}
-// 	},
-
-// 	pauseStream: async () => {
-// 		const { audioInstance } = get();
-// 		if (audioInstance) {
-// 			set({ isLoading: true });
-// 			await audioInstance.pauseAsync();
-// 			set({ isPlaying: false, isLoading: false });
-// 		}
-// 	},
-
-// 	resumeStream: async () => {
-// 		const { audioInstance } = get();
-// 		if (audioInstance) {
-// 			set({ isLoading: true });
-
-// 			audioInstance.setOnPlaybackStatusUpdate((status) => {
-// 				if (status.isPlaying) {
-// 					set({ isPlaying: true, isLoading: false });
-// 				} else if (status.error) {
-// 					set({ isLoading: false });
-// 					console.error('Ошибка воспроизведения:', status.error);
-// 				}
-// 			});
-
-// 			try {
-// 				await audioInstance.playFromPositionAsync(0);
-// 			} catch (error) {
-// 				console.error('Ошибка при возобновлении:', error);
-// 				set({ isLoading: false });
-// 			}
-// 		}
-// 	},
-
-// 	togglePlayPause: () => {
-// 		const { currentStream, isPlaying, pauseStream, resumeStream } = get();
-// 		if (!currentStream?.stream_url) return;
-// 		if (isPlaying) {
-// 			pauseStream();
-// 		} else {
-// 			resumeStream();
-// 		}
-// 	},
-// }));
-
-// export default usePlayerStore;

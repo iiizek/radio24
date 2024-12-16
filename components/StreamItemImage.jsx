@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { CirclePlayIcon } from 'lucide-react-native';
 
 import { Colors } from '../constants/Colors';
+import { API_URL } from '../constants/Environments';
 
 import usePlayerStore from '../stores/PlayerStore';
 
@@ -14,7 +15,7 @@ const StreamItemImage = memo(
 		const coverUrl =
 			String(songCover) === String(cover)
 				? songCover
-				: `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${cover}`;
+				: `${API_URL}/assets/${cover}`;
 
 		return (
 			<View style={[styles.imageContainer, { width, height }]}>

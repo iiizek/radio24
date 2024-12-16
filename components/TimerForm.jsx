@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
 
 import useTimerStore from '../stores/TimerStore';
-import usePlayerStore from '../stores/PlayerStore';
 
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
@@ -13,7 +12,6 @@ import theme from '../utils/colorScheme';
 
 const TimerForm = () => {
 	const [showPicker, setShowPicker] = useState(false);
-	const { pauseStream } = usePlayerStore();
 	const { selectedTime, timeLeft, setSelectedTime, resetTimer } =
 		useTimerStore();
 

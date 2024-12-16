@@ -13,6 +13,8 @@ import { requestNotificationsPermission } from '../../utils/notifications';
 
 import { Colors } from '../../constants/Colors';
 import { Fonts } from '../../constants/Fonts';
+import { API_URL } from '../../constants/Environments';
+
 import theme from '../../utils/colorScheme';
 import StreamItem from '../../components/StreamItem';
 import CurrentStream from '../../components/CurrentStream';
@@ -28,7 +30,7 @@ const HomeScreen = () => {
 	const fetchSongCover = async () => {
 		if (currentStream) {
 			const response = await fetch(
-				`${process.env.EXPO_PUBLIC_API_URL}/api/track-cover?artist=${currentStream.artist}&title=${currentStream.title}`
+				`${API_URL}/api/track-cover?artist=${currentStream.artist}&title=${currentStream.title}`
 			);
 			const data = await response.json();
 			setSongCover(data.coverUrl);

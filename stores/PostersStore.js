@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { API_URL } from '../constants/Environments';
+
 const usePostersStore = create((set) => ({
 	posters: [],
 	lastPoster: null,
@@ -19,9 +21,7 @@ const usePostersStore = create((set) => ({
 	// Загрузка постеров с сервера
 	fetchPosters: async () => {
 		try {
-			const response = await fetch(
-				`${process.env.EXPO_PUBLIC_API_URL}/api/posters`
-			);
+			const response = await fetch(`${API_URL}/api/posters`);
 			const posters = await response.json();
 
 			set((state) => {

@@ -20,6 +20,7 @@ import useTimerStore from '../stores/TimerStore';
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
 import { currentStreamInfo, musicLinksData } from '../constants/Data';
+import { ADMIN_URL } from '../constants/Environments';
 
 import theme from '../utils/colorScheme';
 import PlayerControls from '../components/PlayerControlls';
@@ -32,7 +33,7 @@ const modal = () => {
 	const { timeLeft, selectedTime } = useTimerStore();
 	const { currentStream, isChosen, songCover, isLoading } = usePlayerStore();
 	const coverUrl = isChosen
-		? `${process.env.EXPO_PUBLIC_ADMIN_URL}/assets/${currentStream?.stream_cover}`
+		? `${ADMIN_URL}/assets/${currentStream?.stream_cover}`
 		: null;
 
 	useEffect(() => {
