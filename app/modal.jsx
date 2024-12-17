@@ -1,6 +1,17 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	TouchableOpacity,
+	ScrollView,
+} from 'react-native';
 import React from 'react';
 import { Link, useNavigation } from 'expo-router';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import { ChevronLeft } from 'lucide-react-native';
 
@@ -31,70 +42,72 @@ const modal = () => {
 		  };
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.header}>
-				<View style={styles.backButton}>
-					<TouchableOpacity
-						activeOpacity={0.5}
-						onPress={() => navigation.goBack()}
-					>
-						<ChevronLeft size={40} color={Colors['brand-800']} />
-					</TouchableOpacity>
+		<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+			<View style={styles.container}>
+				<View style={styles.header}>
+					<View style={styles.backButton}>
+						<TouchableOpacity
+							activeOpacity={0.5}
+							onPress={() => navigation.goBack()}
+						>
+							<ChevronLeft size={40} color={Colors['brand-800']} />
+						</TouchableOpacity>
+					</View>
+
+					{selectedTime && (
+						<View style={styles.timer}>
+							<Text style={styles.timerText}>
+								{`${
+									timeLeft > 3600 ? `${Math.floor(timeLeft / 3600)} ч.` : ''
+								} ${Math.floor((timeLeft % 3600) / 60)} мин. ${
+									timeLeft % 60
+								} сек. `}
+							</Text>
+						</View>
+					)}
+
+					<View style={{ width: 48, height: 48 }}></View>
 				</View>
 
-				{selectedTime && (
-					<View style={styles.timer}>
-						<Text style={styles.timerText}>
-							{`${
-								timeLeft > 3600 ? `${Math.floor(timeLeft / 3600)} ч.` : ''
-							} ${Math.floor((timeLeft % 3600) / 60)} мин. ${
-								timeLeft % 60
-							} сек. `}
+				<View style={styles.content}>
+					<View style={styles.coverWrapper}>
+						<Image style={styles.cover} source={modalImage} />
+					</View>
+					<View style={styles.infoWrapper}>
+						<Text style={styles.streamTitle}>
+							{isChosen ? currentStream.server_name : 'Поток не выбран'}
+						</Text>
+						<Text style={styles.trackTitle}>
+							{isChosen && currentStream.title !== null
+								? `${currentStream?.artist} ${
+										currentStream?.title ? '-' : ''
+								  } ${currentStream?.title}`
+								: 'Выбирайте и слушайте!'}
 						</Text>
 					</View>
-				)}
-
-				<View style={{ width: 48, height: 48 }}></View>
-			</View>
-
-			<View style={styles.content}>
-				<View style={styles.coverWrapper}>
-					<Image style={styles.cover} source={modalImage} />
 				</View>
-				<View style={styles.infoWrapper}>
-					<Text style={styles.streamTitle}>
-						{isChosen ? currentStream.server_name : 'Поток не выбран'}
-					</Text>
-					<Text style={styles.trackTitle}>
-						{isChosen && currentStream.title !== null
-							? `${currentStream?.artist} ${currentStream?.title ? '-' : ''} ${
-									currentStream?.title
-							  }`
-							: 'Выбирайте и слушайте!'}
-					</Text>
-				</View>
-			</View>
 
-			<View style={styles.musicLinksWrapper}>
-				<View style={styles.musicLinks}>
-					{isChosen &&
-						currentStream.title &&
-						musicLinksData.map((item) => (
-							<Link
-								asChild
-								key={item.id}
-								href={`${item.url}${currentStream?.artist} ${currentStream?.title}`}
-							>
-								<TouchableOpacity activeOpacity={0.5}>
-									<View style={styles.musicButton}>{item.icon}</View>
-								</TouchableOpacity>
-							</Link>
-						))}
+				<View style={styles.musicLinksWrapper}>
+					<View style={styles.musicLinks}>
+						{isChosen &&
+							currentStream.title &&
+							musicLinksData.map((item) => (
+								<Link
+									asChild
+									key={item.id}
+									href={`${item.url}${currentStream?.artist} ${currentStream?.title}`}
+								>
+									<TouchableOpacity activeOpacity={0.5}>
+										<View style={styles.musicButton}>{item.icon}</View>
+									</TouchableOpacity>
+								</Link>
+							))}
+					</View>
 				</View>
-			</View>
 
-			<PlayerControls />
-		</View>
+				<PlayerControls />
+			</View>
+		</ScrollView>
 	);
 };
 
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
 			theme === 'dark' ? Colors['theme-950'] : Colors['theme-50'],
 		flex: 1,
 		justifyContent: 'space-between',
-		gap: 24,
+		gap: hp('1%'),
 		height: '100%',
 	},
 
@@ -114,8 +127,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingHorizontal: 16,
-		paddingVertical: 16,
+		paddingHorizontal: wp('4%'),
+		paddingVertical: hp('1.5%'),
 	},
 
 	backButton: {
@@ -128,13 +141,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: Colors['brand-800'],
 		borderRadius: 4,
-		paddingHorizontal: 8,
-		paddingVertical: 8,
+		paddingHorizontal: wp('2%'),
+		paddingVertical: hp('0.75%'),
 	},
 
 	timerText: {
 		fontFamily: Fonts.regular,
-		fontSize: 16,
+		fontSize: wp('4%'),
 		color: Colors['theme-50'],
 	},
 
@@ -142,23 +155,23 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingHorizontal: 16,
-		gap: 32,
+		paddingHorizontal: wp('4%'),
+		gap: hp('4%'),
+		width: '100%',
 	},
 
 	coverWrapper: {
-		width: '100%',
-		height: 'auto',
 		borderRadius: 12,
 		justifyContent: 'center',
 		alignItems: 'center',
-		paddingHorizontal: 20,
+		width: wp('80%'),
+		height: wp('80%'),
 	},
 
 	cover: {
 		width: '100%',
-		height: 330,
-		resizeMode: 'cover',
+		height: '100%',
+		resizeMode: 'contain',
 		borderRadius: 12,
 	},
 
@@ -166,35 +179,36 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		gap: 12,
+		gap: hp('1.25%'),
 	},
 
 	streamTitle: {
 		fontFamily: Fonts.bold,
-		fontSize: 24,
+		fontSize: wp('6.5%'),
 		textAlign: 'center',
 		color: theme === 'dark' ? Colors['theme-50'] : Colors['theme-950'],
 	},
 
 	trackTitle: {
 		fontFamily: Fonts.regular,
-		fontSize: 18,
+		fontSize: wp('4.5%'),
 		textAlign: 'center',
 		color: theme === 'dark' ? Colors['theme-400'] : Colors['theme-600'],
-		paddingHorizontal: 16,
+		paddingHorizontal: wp('4%'),
 	},
 
 	musicLinksWrapper: {
+		marginTop: hp('1%'),
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 
 	musicLinks: {
-		paddingHorizontal: 24,
+		paddingHorizontal: wp('2%'),
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
-		gap: 12,
+		gap: wp('3%'),
 		flex: 0,
 	},
 
@@ -203,15 +217,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderColor: Colors['brand-800'],
-		gap: 8,
 		borderWidth: 1,
 		borderRadius: 4,
-		paddingHorizontal: 8,
-		paddingVertical: 8,
-		flexShrink: 0,
-		flexGrow: 0,
-		minWidth: 40,
-		minHeight: 40,
+		paddingHorizontal: wp('2%'),
+		paddingVertical: hp('0.85%'),
 	},
 
 	musicButtonText: {

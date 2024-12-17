@@ -28,7 +28,7 @@ export const musicLinksData = [
 	{
 		id: 2,
 		title: 'VK Музыка',
-		url: `vk://audio/q=`,
+		url: `https://vk.com/audio?q=`,
 		icon: <VkIcon width={28} height={28} fill={Colors['brand-800']} />,
 	},
 

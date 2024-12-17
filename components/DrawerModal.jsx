@@ -41,7 +41,7 @@ const DrawerModal = ({ name, children, icon }) => {
 							>
 								<XIcon
 									strokeWidth={2.5}
-									size={42}
+									size={36}
 									color={Colors['brand-800']}
 								/>
 							</TouchableOpacity>

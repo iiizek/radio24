@@ -68,27 +68,27 @@ const CurrentStream = () => {
 							<HeartIcon
 								strokeWidth={2.5}
 								color={isFavorite ? Colors['brand-800'] : iconColor}
-								size={30}
+								size={24}
 								fill={isFavorite ? Colors['brand-800'] : 'transparent'}
 							/>
 						</TouchableOpacity>
 
 						<TouchableOpacity onPress={togglePlayPause} activeOpacity={0.5}>
 							{isLoading ? (
-								<ActivityIndicator size={30} color={iconColor} />
+								<ActivityIndicator size={24} color={iconColor} />
 							) : isPlaying ? (
 								<PauseIcon
 									strokeWidth={2.5}
 									fill={iconColor}
 									color={iconColor}
-									size={30}
+									size={24}
 								/>
 							) : (
 								<PlayIcon
 									strokeWidth={2.5}
 									fill={iconColor}
 									color={iconColor}
-									size={30}
+									size={24}
 								/>
 							)}
 						</TouchableOpacity>
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingVertical: 10,
-		paddingHorizontal: 16,
+		paddingVertical: 6,
+		paddingHorizontal: 12,
 		gap: 16,
 		borderTopColor:
 			theme === 'dark' ? Colors['theme-900'] : Colors['theme-100'],

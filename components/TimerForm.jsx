@@ -7,6 +7,10 @@ import {
 	ScrollView,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import useTimerStore from '../stores/TimerStore';
 
@@ -136,14 +140,6 @@ const styles = StyleSheet.create({
 		width: '100%',
 		flexDirection: 'row',
 		paddingHorizontal: -12,
-		//set inset shadow in horizontal
-		shadowColor: theme === 'dark' ? Colors['theme-900'] : Colors['theme-100'],
-		shadowOpacity: 0.5,
-		shadowRadius: 4,
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
 	},
 
 	buttonsRow: {
@@ -161,11 +157,11 @@ const styles = StyleSheet.create({
 		borderColor: Colors['brand-800'],
 		borderWidth: 1,
 		borderRadius: 4,
-		padding: 12,
+		padding: wp('2%'),
 	},
 
 	outlinedButtonText: {
-		fontSize: 20,
+		fontSize: wp('4.5%'),
 		fontFamily: Fonts.regular,
 		color: Colors['brand-800'],
 		textAlign: 'center',
@@ -177,13 +173,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: Colors['brand-800'],
 		borderRadius: 4,
-		padding: 12,
+		padding: wp('2%'),
 		borderWidth: 1,
 		borderColor: Colors['brand-800'],
 	},
 
 	buttonText: {
-		fontSize: 20,
+		fontSize: wp('4.5%'),
 		fontFamily: Fonts.regular,
 		color: Colors['theme-50'],
 		textAlign: 'center',

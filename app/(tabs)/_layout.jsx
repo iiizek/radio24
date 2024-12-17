@@ -15,13 +15,13 @@ const TabsLayout = () => {
 				tabBarStyle: {
 					backgroundColor: Colors['brand-800'],
 					paddingHorizontal: 32,
-					paddingTop: 2,
-					height: 60,
+					paddingTop: 0,
+					height: 52,
 					borderTopWidth: 0,
 				},
 				tabBarLabelStyle: {
 					fontFamily: Fonts.regular,
-					marginTop: 4,
+					marginTop: 0,
 					fontSize: 12,
 					fontWeight: '500',
 					transition: '0.2s ease-in-out',
@@ -32,12 +32,13 @@ const TabsLayout = () => {
 				},
 				headerStatusBarHeight: 0,
 				headerTitleAlign: 'center',
+				headerStatusBarHeight: -12,
 			}}
 		>
 			<Tabs.Screen
 				name='index'
 				options={{
-					tabBarIcon: ({ color }) => <RadioIcon size={28} color={color} />,
+					tabBarIcon: ({ color }) => <RadioIcon size={24} color={color} />,
 					tabBarLabel: 'Потоки',
 					headerTitle: 'РАДИО24 - Яркие моменты вместе! 🔥',
 					headerTitleStyle: {
@@ -45,17 +46,16 @@ const TabsLayout = () => {
 						fontFamily: Fonts.bold,
 						color: Colors['theme-50'],
 					},
-					headerStatusBarHeight: -16,
 				}}
 			/>
 			<Tabs.Screen
 				name='favorites'
 				options={{
-					tabBarIcon: ({ color }) => <HeartIcon size={28} color={color} />,
+					tabBarIcon: ({ color }) => <HeartIcon size={24} color={color} />,
 					tabBarLabel: 'Избранное',
 					headerTitle: 'Любимые потоки ❤️‍🔥',
 					headerTitleStyle: {
-						fontSize: 16,
+						fontSize: 18,
 						fontFamily: Fonts.bold,
 						color: Colors['theme-50'],
 					},
@@ -64,11 +64,11 @@ const TabsLayout = () => {
 			<Tabs.Screen
 				name='contacts'
 				options={{
-					tabBarIcon: ({ color }) => <InfoIcon size={28} color={color} />,
+					tabBarIcon: ({ color }) => <InfoIcon size={24} color={color} />,
 					tabBarLabel: 'Контакты',
 					headerTitle: 'Контактная информация',
 					headerTitleStyle: {
-						fontSize: 16,
+						fontSize: 18,
 						fontFamily: Fonts.bold,
 						color: Colors['theme-50'],
 					},
