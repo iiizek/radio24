@@ -52,6 +52,23 @@
 						"usesCleartextTraffic": true
 					}
 				}
+			],
+			[
+				"@react-native-community/datetimepicker",
+				{
+					"android": {
+						"timePicker": {
+							"headerBackground": {
+								"light": "#8b00ab",
+								"dark": "#8b00ab"
+							},
+							"numbersSelectorColor": {
+								"light": "#8b00ab",
+								"dark": "#8b00ab"
+							}
+						}
+					}
+				}
 			]
 		],
 		"runtimeVersion": {

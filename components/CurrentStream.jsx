@@ -50,7 +50,7 @@ const CurrentStream = () => {
 			<TouchableNativeFeedback>
 				<View style={styles.container}>
 					<View style={styles.startContainer}>
-						<StreamItemImage cover={itemImage} width={56} height={56} />
+						<StreamItemImage cover={itemImage} width={48} height={48} />
 						<StreamItemInfo name={itemName} description={itemDescription} />
 					</View>
 

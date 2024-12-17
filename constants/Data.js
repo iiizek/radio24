@@ -22,34 +22,34 @@ export const musicLinksData = [
 		id: 1,
 		title: 'Яндекс Музыка',
 		url: `https://music.yandex.ru/search?text=`,
-		icon: <YandexMusicIcon width={30} height={30} fill={Colors['brand-800']} />,
+		icon: <YandexMusicIcon width={28} height={28} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 2,
 		title: 'VK Музыка',
-		url: `https://vk.com/music?q=`,
-		icon: <VkIcon width={30} height={30} fill={Colors['brand-800']} />,
+		url: `vk://audio/q=`,
+		icon: <VkIcon width={28} height={28} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 3,
 		title: 'Zvuk',
 		url: `https://zvuk.com/search?query=`,
-		icon: <ZvukIcon width={30} height={30} fill={Colors['brand-800']} />,
+		icon: <ZvukIcon width={28} height={28} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 4,
 		title: 'Spotify',
 		url: `https://open.spotify.com/search/`,
-		icon: <SpotifyIcon width={30} height={30} fill={Colors['brand-800']} />,
+		icon: <SpotifyIcon width={28} height={28} fill={Colors['brand-800']} />,
 	},
 
 	{
 		id: 5,
 		title: 'Apple Music',
 		url: `https://music.apple.com/ru/search?term=`,
-		icon: <AppleMusicIcon width={30} height={30} fill={Colors['brand-800']} />,
+		icon: <AppleMusicIcon width={28} height={28} fill={Colors['brand-800']} />,
 	},
 ];

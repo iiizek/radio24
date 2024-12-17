@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import useTimerStore from '../stores/TimerStore';
 
@@ -15,33 +15,32 @@ import { Fonts } from '../constants/Fonts';
 import theme from '../utils/colorScheme';
 
 const TimerForm = () => {
-	const [showPicker, setShowPicker] = useState(false);
-	const [tempTime, setTempTime] = useState(new Date());
+	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const { selectedTime, timeLeft, setSelectedTime, resetTimer } =
 		useTimerStore();
 
-	// Обработчик изменения времени
-	const handleTimeChange = (event, date) => {
-		setShowPicker(false);
+	// Показ и скрытие DateTimePicker
+	const showDatePicker = () => setDatePickerVisibility(true);
+	const hideDatePicker = () => setDatePickerVisibility(false);
 
-		if (event.type === 'dismissed') return;
+	// Обработчик выбора времени
+	const handleConfirm = (date) => {
+		const now = new Date();
+		let selectedDateTime = new Date(
+			now.getFullYear(),
+			now.getMonth(),
+			now.getDate(),
+			date.getHours(),
+			date.getMinutes()
+		);
 
-		if (date) {
-			const now = new Date();
-			const selectedDateTime = new Date(
-				now.getFullYear(),
-				now.getMonth(),
-				now.getDate(),
-				date.getHours(),
-				date.getMinutes()
-			);
-
-			if (selectedDateTime <= now) {
-				selectedDateTime.setDate(selectedDateTime.getDate() + 1);
-			}
-
-			setSelectedTime(selectedDateTime.getTime());
+		// Если выбранное время уже прошло, добавляем 1 день
+		if (selectedDateTime <= now) {
+			selectedDateTime.setDate(selectedDateTime.getDate() + 1);
 		}
+
+		setSelectedTime(selectedDateTime.getTime());
+		hideDatePicker();
 	};
 
 	// Обработчик кнопок с фиксированным временем
@@ -53,17 +52,6 @@ const TimerForm = () => {
 
 	return (
 		<View style={styles.container}>
-			{showPicker && (
-				<DateTimePicker
-					value={tempTime}
-					mode='time'
-					is24Hour={true}
-					display='spinner'
-					onChange={handleTimeChange}
-					accentColor={Colors['brand-800']}
-				/>
-			)}
-
 			<Text style={styles.timerText}>
 				{timeLeft !== null
 					? `До остановки: ${
@@ -91,7 +79,7 @@ const TimerForm = () => {
 
 				<TouchableOpacity
 					activeOpacity={0.5}
-					onPress={selectedTime ? resetTimer : () => setShowPicker(true)}
+					onPress={selectedTime ? resetTimer : showDatePicker}
 				>
 					<View style={styles.button}>
 						<Text style={styles.buttonText}>
@@ -100,6 +88,18 @@ const TimerForm = () => {
 					</View>
 				</TouchableOpacity>
 			</View>
+
+			{/* Модальное окно выбора времени */}
+			<DateTimePickerModal
+				isVisible={isDatePickerVisible}
+				mode='time'
+				is24Hour={true}
+				onConfirm={handleConfirm}
+				onCancel={hideDatePicker}
+				confirmTextIOS='Подтвердить'
+				cancelTextIOS='Отмена'
+				headerTextIOS='Выберите время'
+			/>
 		</View>
 	);
 };

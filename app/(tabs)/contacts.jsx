@@ -27,14 +27,14 @@ const ContactsScreen = () => {
 				<Link asChild href='https://radio24.ru'>
 					<TouchableNativeFeedback>
 						<View style={styles.item}>
-							<Link2Icon size={32} color={Colors['brand-800']} />
+							<Link2Icon size={28} color={Colors['brand-800']} />
 							<Text style={styles.itemText}>radio24.ru</Text>
 						</View>
 					</TouchableNativeFeedback>
 				</Link>
 
 				<View style={styles.item}>
-					<MapPinIcon size={32} color={Colors['brand-800']} />
+					<MapPinIcon size={28} color={Colors['brand-800']} />
 					<Text style={styles.itemText}>
 						Москва, Пренесенская набережная, 2
 					</Text>
@@ -43,7 +43,7 @@ const ContactsScreen = () => {
 				<Link asChild href='mailto:info@wowmusic.ru'>
 					<TouchableNativeFeedback>
 						<View style={styles.item}>
-							<MailIcon size={32} color={Colors['brand-800']} />
+							<MailIcon size={28} color={Colors['brand-800']} />
 							<Text style={styles.itemText}>Отправить сообщение</Text>
 						</View>
 					</TouchableNativeFeedback>
@@ -52,7 +52,7 @@ const ContactsScreen = () => {
 				<Link asChild href='https://vyshka24.ru/backend/privacy.php'>
 					<TouchableNativeFeedback>
 						<View style={styles.item}>
-							<ShieldCheckIcon size={32} color={Colors['brand-800']} />
+							<ShieldCheckIcon size={28} color={Colors['brand-800']} />
 							<Text style={styles.itemText}>Политика конфиденциальности</Text>
 						</View>
 					</TouchableNativeFeedback>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 
 	itemText: {
 		fontFamily: Fonts.regular,
-		fontSize: 20,
+		fontSize: 18,
 		color: theme === 'dark' ? Colors['theme-50'] : Colors['theme-950'],
 		flex: 1,
 		textAlign: 'left',

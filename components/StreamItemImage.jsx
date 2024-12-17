@@ -9,7 +9,7 @@ import { ADMIN_URL } from '../constants/Environments';
 import usePlayerStore from '../stores/PlayerStore';
 
 const StreamItemImage = memo(
-	({ id = null, cover, width = 64, height = 64 }) => {
+	({ id = null, cover, width = 54, height = 54 }) => {
 		const { isChosen, currentStream, songCover, isPlaying, isLoading } =
 			usePlayerStore();
 		const coverUrl =

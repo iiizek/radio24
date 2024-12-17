@@ -41,10 +41,11 @@ const TabsLayout = () => {
 					tabBarLabel: 'Потоки',
 					headerTitle: 'РАДИО24 - Яркие моменты вместе! 🔥',
 					headerTitleStyle: {
-						fontSize: 18,
+						fontSize: 16,
 						fontFamily: Fonts.bold,
 						color: Colors['theme-50'],
 					},
+					headerStatusBarHeight: -16,
 				}}
 			/>
 			<Tabs.Screen
@@ -54,7 +55,7 @@ const TabsLayout = () => {
 					tabBarLabel: 'Избранное',
 					headerTitle: 'Любимые потоки ❤️‍🔥',
 					headerTitleStyle: {
-						fontSize: 24,
+						fontSize: 16,
 						fontFamily: Fonts.bold,
 						color: Colors['theme-50'],
 					},
@@ -67,7 +68,7 @@ const TabsLayout = () => {
 					tabBarLabel: 'Контакты',
 					headerTitle: 'Контактная информация',
 					headerTitleStyle: {
-						fontSize: 24,
+						fontSize: 16,
 						fontFamily: Fonts.bold,
 						color: Colors['theme-50'],
 					},

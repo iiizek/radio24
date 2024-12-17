@@ -38,13 +38,13 @@ const styles = StyleSheet.create({
 	},
 
 	streamTitle: {
-		fontSize: 20,
+		fontSize: 18,
 		fontFamily: Fonts.bold,
 		color: theme === 'dark' ? Colors['theme-50'] : Colors['theme-950'],
 	},
 
 	streamDescription: {
-		fontSize: 16,
+		fontSize: 14,
 		fontFamily: Fonts.regular,
 		color: theme === 'dark' ? Colors['theme-400'] : Colors['theme-600'],
 		overflow: 'hidden',

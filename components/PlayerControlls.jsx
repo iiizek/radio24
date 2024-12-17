@@ -44,7 +44,7 @@ const PlayerControls = () => {
 				<DrawerModal
 					name='Таймер отключения'
 					icon={
-						<ClockIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+						<ClockIcon strokeWidth={3} size={28} color={Colors['brand-800']} />
 					}
 				>
 					<TimerForm />
@@ -57,7 +57,7 @@ const PlayerControls = () => {
 				onPress={isChosen ? () => skipStream('prev') : () => {}}
 				activeOpacity={0.5}
 			>
-				<SkipBackIcon strokeWidth={2.1} size={42} color={Colors['brand-800']} />
+				<SkipBackIcon strokeWidth={2.1} size={36} color={Colors['brand-800']} />
 			</TouchableOpacity>
 
 			<View style={{ borderRadius: 9999, overflow: 'hidden' }}>
@@ -68,13 +68,13 @@ const PlayerControls = () => {
 						) : isPlaying ? (
 							<PauseIcon
 								fill={Colors['theme-50']}
-								size={42}
+								size={36}
 								color={Colors['theme-50']}
 							/>
 						) : (
 							<PlayIcon
 								fill={Colors['theme-50']}
-								size={42}
+								size={36}
 								color={Colors['theme-50']}
 							/>
 						)}
@@ -88,7 +88,7 @@ const PlayerControls = () => {
 			>
 				<SkipForwardIcon
 					strokeWidth={2.1}
-					size={42}
+					size={36}
 					color={Colors['brand-800']}
 				/>
 			</TouchableOpacity>
@@ -111,7 +111,7 @@ const PlayerControls = () => {
 						color={Colors['brand-800']}
 					/>
 				) : (
-					<HeartIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+					<HeartIcon strokeWidth={3} size={28} color={Colors['brand-800']} />
 				)}
 			</TouchableOpacity>
 		</View>
@@ -123,15 +123,15 @@ export default PlayerControls;
 const styles = StyleSheet.create({
 	controls: {
 		flexDirection: 'row',
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		alignItems: 'center',
 		paddingHorizontal: 24,
 		paddingVertical: 16,
 	},
 
 	playButton: {
-		width: 80,
-		height: 80,
+		width: 64,
+		height: 64,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: Colors['brand-800'],

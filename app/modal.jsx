@@ -1,47 +1,28 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigation } from 'expo-router';
 
-import DrawerModal from '../components/DrawerModal';
-
-import { ChevronLeft, InfoIcon } from 'lucide-react-native';
+import { ChevronLeft } from 'lucide-react-native';
 
 import usePlayerStore from '../stores/PlayerStore';
 import useTimerStore from '../stores/TimerStore';
 
 import { Colors } from '../constants/Colors';
 import { Fonts } from '../constants/Fonts';
-import { currentStreamInfo, musicLinksData } from '../constants/Data';
+import { musicLinksData } from '../constants/Data';
 import { ADMIN_URL } from '../constants/Environments';
 
 import theme from '../utils/colorScheme';
 import PlayerControls from '../components/PlayerControlls';
-import CurrentStreamInfoItems from '../components/CurrentStreamInfoItems';
 
 const modal = () => {
 	const navigation = useNavigation();
-	const [modalInfo, setModalInfo] = useState(currentStreamInfo);
 
 	const { timeLeft, selectedTime } = useTimerStore();
 	const { currentStream, isChosen, songCover } = usePlayerStore();
 	const coverUrl = isChosen
 		? `${ADMIN_URL}/assets/${currentStream?.stream_cover}`
 		: null;
-
-	useEffect(() => {
-		if (isChosen) {
-			setModalInfo({
-				Название: currentStream?.server_name,
-				Описание: currentStream?.server_description,
-				Артист: currentStream?.artist,
-				Трек: currentStream?.title,
-				Жанр: currentStream?.genre,
-				Битрейт: currentStream?.bitrate,
-				'Stream URL': currentStream?.stream_url,
-				Формат: currentStream?.server_type,
-			});
-		}
-	}, [currentStream]);
 
 	const modalImage = !coverUrl
 		? require('../assets/radio24.png')
@@ -57,7 +38,7 @@ const modal = () => {
 						activeOpacity={0.5}
 						onPress={() => navigation.goBack()}
 					>
-						<ChevronLeft size={48} color={Colors['brand-800']} />
+						<ChevronLeft size={40} color={Colors['brand-800']} />
 					</TouchableOpacity>
 				</View>
 
@@ -166,15 +147,18 @@ const styles = StyleSheet.create({
 	},
 
 	coverWrapper: {
-		width: 360,
-		height: 360,
+		width: '100%',
+		height: 'auto',
 		borderRadius: 12,
+		justifyContent: 'center',
+		alignItems: 'center',
+		paddingHorizontal: 20,
 	},
 
 	cover: {
-		width: 360,
-		height: 360,
-		resizeMode: 'contain',
+		width: '100%',
+		height: 330,
+		resizeMode: 'cover',
 		borderRadius: 12,
 	},
 
@@ -187,14 +171,14 @@ const styles = StyleSheet.create({
 
 	streamTitle: {
 		fontFamily: Fonts.bold,
-		fontSize: 28,
+		fontSize: 24,
 		textAlign: 'center',
 		color: theme === 'dark' ? Colors['theme-50'] : Colors['theme-950'],
 	},
 
 	trackTitle: {
 		fontFamily: Fonts.regular,
-		fontSize: 20,
+		fontSize: 18,
 		textAlign: 'center',
 		color: theme === 'dark' ? Colors['theme-400'] : Colors['theme-600'],
 		paddingHorizontal: 16,
@@ -222,8 +206,8 @@ const styles = StyleSheet.create({
 		gap: 8,
 		borderWidth: 1,
 		borderRadius: 4,
-		paddingHorizontal: 10,
-		paddingVertical: 10,
+		paddingHorizontal: 8,
+		paddingVertical: 8,
 		flexShrink: 0,
 		flexGrow: 0,
 		minWidth: 40,
