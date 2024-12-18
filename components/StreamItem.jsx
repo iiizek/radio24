@@ -38,7 +38,6 @@ const StreamItem = memo(({ cover, name, description, id, index }) => {
 
 		try {
 			await setIsLoading(true);
-			await setSongCover(null);
 			await setCurrentStream(currentStream);
 			setIsChosen(true);
 			await playStream(currentStream.stream_url);
@@ -64,7 +63,7 @@ const StreamItem = memo(({ cover, name, description, id, index }) => {
 			>
 				<View style={styles.startContainer}>
 					<StreamItemImage id={id} cover={cover} />
-					<StreamItemInfo name={name} description={description} />
+					<StreamItemInfo width='80%' name={name} description={description} />
 				</View>
 			</View>
 		</TouchableNativeFeedback>

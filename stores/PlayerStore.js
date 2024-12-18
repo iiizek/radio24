@@ -203,7 +203,6 @@ const usePlayerStore = create((set, get) => ({
 		const skipMethod = async (stream) => {
 			if (isLoading) return;
 			await setIsLoading(true);
-			await setSongCover(null);
 			await setCurrentStream(stream);
 			await playStream(stream.stream_url);
 			setIsLoading(false);

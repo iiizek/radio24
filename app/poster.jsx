@@ -1,6 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { XIcon } from 'lucide-react-native';
+import {
+	widthPercentageToDP as wp,
+	heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import { useRouter } from 'expo-router';
 
 import usePostersStore from '../stores/PostersStore';
@@ -46,9 +49,9 @@ const poster = () => {
 			<View
 				style={{
 					position: 'absolute',
-					bottom: 8,
+					bottom: hp('2.5%'),
 					width: '100%',
-					paddingHorizontal: 8,
+					paddingHorizontal: wp('4%'),
 				}}
 			>
 				<TouchableOpacity onPress={handleClose} activeOpacity={0.5}>
@@ -67,11 +70,9 @@ const styles = StyleSheet.create({
 	container: {
 		position: 'relative',
 		flex: 1,
-		justifyContent: 'space-between',
+		justifyContent: 'flex-start',
 		alignItems: 'center',
 		backgroundColor: Colors['brand-950'],
-		width: '100%',
-		height: '100%',
 	},
 
 	blurCopyImage: {
@@ -94,13 +95,16 @@ const styles = StyleSheet.create({
 		left: 0,
 		width: '100%',
 		height: '100%',
-		backgroundColor: 'rgba(0, 0, 0, 0.3)',
+		backgroundColor: 'rgba(0, 0, 0, 0.5)',
 	},
 
 	imageContainer: {
-		padding: 12,
-		width: '100%',
-		height: '100%',
+		position: 'absolute',
+		top: hp('4.5%'),
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		width: wp('91.5%'),
+		height: hp('81.5%'),
 		flex: 1,
 	},
 
@@ -108,12 +112,13 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: '100%',
 		resizeMode: 'contain',
+		borderRadius: 8,
 	},
 
 	closeButton: {
 		zIndex: 100,
 		backgroundColor: Colors['brand-800'],
-		padding: 12,
+		padding: wp('3%'),
 		borderRadius: 8,
 		width: '100%',
 		zIndex: 100,

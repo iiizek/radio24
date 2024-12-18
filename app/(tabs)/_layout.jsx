@@ -16,7 +16,7 @@ const TabsLayout = () => {
 					backgroundColor: Colors['brand-800'],
 					paddingHorizontal: 32,
 					paddingTop: 0,
-					height: 52,
+					height: 54,
 					borderTopWidth: 0,
 				},
 				tabBarLabelStyle: {
@@ -32,7 +32,7 @@ const TabsLayout = () => {
 				},
 				headerStatusBarHeight: 0,
 				headerTitleAlign: 'center',
-				headerStatusBarHeight: -12,
+				headerStatusBarHeight: -8,
 			}}
 		>
 			<Tabs.Screen

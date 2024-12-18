@@ -48,13 +48,17 @@ const PlayerControls = () => {
 				<DrawerModal
 					name='Таймер отключения'
 					icon={
-						<ClockIcon strokeWidth={3} size={28} color={Colors['brand-800']} />
+						<ClockIcon
+							strokeWidth={2.7}
+							size={28}
+							color={Colors['brand-800']}
+						/>
 					}
 				>
 					<TimerForm />
 				</DrawerModal>
 			) : (
-				<ClockIcon strokeWidth={3} size={30} color={Colors['brand-800']} />
+				<ClockIcon strokeWidth={2.7} size={30} color={Colors['brand-800']} />
 			)}
 
 			<TouchableOpacity
@@ -110,12 +114,12 @@ const PlayerControls = () => {
 				{isFavorite ? (
 					<HeartIcon
 						fill={Colors['brand-800']}
-						strokeWidth={3}
+						strokeWidth={2.7}
 						size={30}
 						color={Colors['brand-800']}
 					/>
 				) : (
-					<HeartIcon strokeWidth={3} size={28} color={Colors['brand-800']} />
+					<HeartIcon strokeWidth={2.7} size={28} color={Colors['brand-800']} />
 				)}
 			</TouchableOpacity>
 		</View>

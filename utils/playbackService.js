@@ -44,7 +44,7 @@ export const playbackService = async function () {
 	);
 	const skipToPreviousListener = TrackPlayer.addEventListener(
 		Event.RemotePrevious,
-		() => onSkip('previous')
+		() => onSkip('prev')
 	);
 
 	return () => {

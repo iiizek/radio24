@@ -11,6 +11,7 @@ import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 
 import useTimerStore from '../stores/TimerStore';
 
@@ -65,21 +66,45 @@ const TimerForm = () => {
 			</Text>
 
 			<View style={styles.buttons}>
-				<ScrollView horizontal showsHorizontalScrollIndicator={false}>
-					<View style={styles.buttonsGroup}>
-						{[15, 30, 45, 60, 90, 120].map((minutes) => (
-							<TouchableOpacity
-								key={minutes}
-								activeOpacity={0.5}
-								onPress={() => handleFixedTime(minutes)}
-							>
-								<View style={styles.outlinedButton}>
-									<Text style={styles.outlinedButtonText}>{minutes} мин.</Text>
-								</View>
-							</TouchableOpacity>
-						))}
-					</View>
-				</ScrollView>
+				<View style={{ marginHorizontal: wp('2%') }}>
+					<LinearGradient
+						colors={[
+							theme === 'dark' ? Colors['theme-950'] : Colors['theme-50'],
+							'transparent',
+						]}
+						style={styles.shadowLeft}
+						start={{ x: 0, y: 0 }}
+						end={{ x: 1, y: 0 }}
+					/>
+
+					<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+						<View style={styles.buttonsGroup}>
+							{[15, 30, 45, 60, 90, 120].map((minutes) => (
+								<TouchableOpacity
+									key={minutes}
+									activeOpacity={0.5}
+									onPress={() => handleFixedTime(minutes)}
+								>
+									<View style={styles.outlinedButton}>
+										<Text style={styles.outlinedButtonText}>
+											{minutes} мин.
+										</Text>
+									</View>
+								</TouchableOpacity>
+							))}
+						</View>
+					</ScrollView>
+
+					<LinearGradient
+						colors={[
+							'transparent',
+							theme === 'dark' ? Colors['theme-950'] : Colors['theme-50'],
+						]}
+						style={styles.shadowRight}
+						start={{ x: 0, y: 0 }}
+						end={{ x: 1, y: 0 }}
+					/>
+				</View>
 
 				<TouchableOpacity
 					activeOpacity={0.5}
@@ -118,11 +143,12 @@ const styles = StyleSheet.create({
 		gap: 24,
 		paddingTop: 24,
 		paddingBottom: 24,
-		paddingHorizontal: 24,
+		paddingHorizontal: 0,
 		width: '100%',
 	},
 
 	timerText: {
+		marginHorizontal: 24,
 		textAlign: 'center',
 		fontSize: 18,
 		fontFamily: Fonts.regular,
@@ -134,12 +160,30 @@ const styles = StyleSheet.create({
 		width: '100%',
 	},
 
+	shadowLeft: {
+		position: 'absolute',
+		left: 0,
+		top: 0,
+		bottom: 0,
+		width: wp('6%'),
+		zIndex: 10,
+	},
+
+	shadowRight: {
+		position: 'absolute',
+		right: 0,
+		top: 0,
+		bottom: 0,
+		width: wp('6%'),
+		zIndex: 10,
+	},
+
 	buttonsGroup: {
 		justifyContent: 'flex-start',
 		gap: 12,
 		width: '100%',
 		flexDirection: 'row',
-		paddingHorizontal: -12,
+		paddingHorizontal: 16,
 	},
 
 	buttonsRow: {
@@ -157,7 +201,8 @@ const styles = StyleSheet.create({
 		borderColor: Colors['brand-800'],
 		borderWidth: 1,
 		borderRadius: 4,
-		padding: wp('2%'),
+		paddingVertical: wp('2%'),
+		paddingHorizontal: wp('3%'),
 	},
 
 	outlinedButtonText: {
@@ -168,6 +213,7 @@ const styles = StyleSheet.create({
 	},
 
 	button: {
+		marginHorizontal: 24,
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',

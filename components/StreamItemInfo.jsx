@@ -6,13 +6,13 @@ import { Fonts } from '../constants/Fonts';
 
 import theme from '../utils/colorScheme';
 
-const StreamItemInfo = memo(({ name, description }) => {
+const StreamItemInfo = memo(({ name, description, width = '100%' }) => {
 	return (
 		<View style={styles.infoContainer}>
-			<Text style={styles.streamTitle} numberOfLines={1}>
+			<Text style={[styles.streamTitle, { width: width }]} numberOfLines={1}>
 				{name}
 			</Text>
-			<View style={styles.descWrapper}>
+			<View style={{ width: width }}>
 				<Text style={styles.streamDescription} numberOfLines={1}>
 					{description}
 				</Text>
@@ -30,10 +30,6 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 		gap: 4,
 		overflow: 'hidden',
-		width: '100%',
-	},
-
-	descWrapper: {
 		width: '100%',
 	},
 

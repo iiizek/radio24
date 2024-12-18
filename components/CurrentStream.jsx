@@ -56,6 +56,7 @@ const CurrentStream = () => {
 
 					<View style={styles.endContainer}>
 						<TouchableOpacity
+							hitSlop={10}
 							onPress={
 								isChosen
 									? isFavorite
@@ -73,7 +74,11 @@ const CurrentStream = () => {
 							/>
 						</TouchableOpacity>
 
-						<TouchableOpacity onPress={togglePlayPause} activeOpacity={0.5}>
+						<TouchableOpacity
+							hitSlop={10}
+							onPress={togglePlayPause}
+							activeOpacity={0.5}
+						>
 							{isLoading ? (
 								<ActivityIndicator size={24} color={iconColor} />
 							) : isPlaying ? (
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		paddingVertical: 6,
+		paddingVertical: 8,
 		paddingHorizontal: 12,
 		gap: 16,
 		borderTopColor:
