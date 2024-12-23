@@ -3,7 +3,7 @@
 		"name": "RADIO24",
 		"slug": "radio24",
 		"version": "1.0.0",
-		"scheme": "your-app-scheme",
+		"scheme": "radio24",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "automatic",
@@ -18,14 +18,14 @@
 			"infoPlist": {
 				"UIBackgroundModes": ["audio"]
 			},
-			"bundleIdentifier": "com.paradiselxst.radio24"
+			"bundleIdentifier": "com.wowmusic.radio"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
-			"package": "com.paradiselxst.radio24",
+			"package": "com.wowmusic.radio",
 			"permissions": [
 				"INTERNET",
 				"FOREGROUND_SERVICE",
@@ -39,7 +39,8 @@
 		},
 		"extra": {
 			"eas": {
-				"projectId": "4d521f26-637f-49bc-8a9b-80162131c617"
+				// "projectId": "4d521f26-637f-49bc-8a9b-80162131c617"
+				"projectId": "34683e9e-eedd-4f93-a721-e99df1041f52"
 			}
 		},
 		"plugins": [
