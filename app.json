@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "RADIO24",
 		"slug": "radio24",
-		"version": "1.0.0",
+		"version": "6.0.0",
 		"scheme": "radio24",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
@@ -26,6 +26,7 @@
 				"backgroundColor": "#ffffff"
 			},
 			"package": "com.wowmusic.radio",
+			"versionCode": 30,
 			"permissions": [
 				"INTERNET",
 				"FOREGROUND_SERVICE",
